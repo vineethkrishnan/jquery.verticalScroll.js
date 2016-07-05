@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+/*!
+ * jquery.verticalScroll.css -http://vineethkrishnan.in
+ * Version - 1.1.0
+ * Licensed under the MIT license - http://opensource.org/licenses/MIT
+ *
+ * Copyright (c) 2016 Vineeth Krishnan
+ */
+
+ .vs-paginate{
+ 	position: absolute;
+ 	list-style: none;
+ 	right: 10px;
+ 	top: 20%;
+ 	z-index: 1;
+ }
+
+ .vs-paginate > li{
+ 	list-style-type: none;
+ }
+
+ .vs-paginate  li  a{
+ 	background-color: #333;
+ 	width: 5px;
+ 	border-radius: 50%;
+ 	height: 5px;
+ 	display: block;
+ 	padding: 5px;
+ 	border: 1px solid #333;
+ 	margin: 10px auto;
+ 	transition: all 0.5s linear 0s;
+ 	-o-transition: all 0.5s linear 0s;
+ 	-ms-transition: all 0.5s linear 0s;
+ 	-moz-transition: all 0.5s linear 0s;
+ 	-webkit-transition: all 0.5s linear 0s;
+ }
+
+ .vs-paginate  li  a:active,
+ .vs-paginate  li  a:focus{
+ 	text-decoration: none;
+ 	outline: none;
+ }
+ .vs-paginate  li  a:hover,
+ .vs-paginate  li  a.vs-active
+ {
+ 	text-decoration: none;
+ 	border: 1px solid #333;
+ 	background-color: #fff;
+ 	-webkit-animation-duration: 1s;
+ 	animation-duration: 1s;
+ 	-webkit-animation-fill-mode: both;
+ 	animation-fill-mode: both;
+ 	-webkit-animation-iteration-count: infinite;
+ 	animation-iteration-count: infinite;
+ 	-webkit-animation-name: pulse;
+ 	animation-name: pulse;
+ }
+
+
+
+
+/*!
+ * Originally Authored by Daniel Eden -http://daneden.me/animate
+ */
+ @-webkit-keyframes pulse {
+ 	from {
+ 		-webkit-transform: scale3d(1, 1, 1);
+ 		transform: scale3d(1, 1, 1);
+ 	}
+
+ 	50% {
+ 		-webkit-transform: scale3d(1.25, 1.25, 1.25);
+ 		transform: scale3d(1.25, 1.25, 1.25);
+ 	}
+
+ 	to {
+ 		-webkit-transform: scale3d(1, 1, 1);
+ 		transform: scale3d(1, 1, 1);
+ 	}
+ }
+
+ @keyframes pulse {
+ 	from {
+ 		-webkit-transform: scale3d(1, 1, 1);
+ 		transform: scale3d(1, 1, 1);
+ 	}
+
+ 	50% {
+ 		-webkit-transform: scale3d(1.25, 1.25, 1.25);
+ 		transform: scale3d(1.25, 1.25, 1.25);
+ 	}
+
+ 	to {
+ 		-webkit-transform: scale3d(1, 1, 1);
+ 		transform: scale3d(1, 1, 1);
+ 	}
+ }

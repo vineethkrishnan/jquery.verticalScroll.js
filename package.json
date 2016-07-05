@@ -1,0 +1,26 @@
+{
+  "name": "jquery.verticalscroll",
+  "version": "1.0.0",
+  "description": "jQuery verticalScroll enables you to scroll sections in a smooth way",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vineethkrishnan/jquery.verticalScroll.js.git"
+  },
+  "keywords": [
+    "verticalScroll"
+  ],
+  "author": "Vineeth Krishnan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues"
+  },
+  "homepage": "https://github.com/vineethkrishnan/jquery.verticalScroll.js#readme",
+  "devDependencies": {
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-uglify": "^1.0.1"
+  }
+}

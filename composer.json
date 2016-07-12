@@ -1,0 +1,13 @@
+{
+    "name": "vineethkrishnan/vertical-scroll",
+    "description": "verticalScroll lets you enable scrolling your page vertically no matter if it is an inside section or just a one page",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vineeth Krishnan",
+            "email": "vineethkrishnan007@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

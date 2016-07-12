@@ -6,6 +6,9 @@
  * Copyright (c) 2016 Vineeth Krishnan
  */
  (function($){
+
+ 	"use strict";
+
  	$.fn.verticalScroll = function(options){
  		var settings = $.extend({
  			selector: 'div',

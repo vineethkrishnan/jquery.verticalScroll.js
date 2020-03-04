@@ -34,7 +34,7 @@ git clone https://github.com/vineethkrishnan/jquery.verticalScroll.js
 ## JavaScript
 
 ```js
-$("#page")..verticalScroll();
+$("#page").verticalScroll();
 ```
 
 

@@ -40,7 +40,7 @@ $("#page").verticalScroll();
 
 ### Available Options
 ```js
-$("#page")..verticalScroll({
+$("#page").verticalScroll({
 	selector: 'div',
 	paginate: true
 });

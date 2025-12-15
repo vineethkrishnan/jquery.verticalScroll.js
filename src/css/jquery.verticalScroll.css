@@ -1,98 +1,402 @@
-@charset "UTF-8";
-
-/*!
- * jquery.verticalScroll.css -http://vineethkrishnan.in
- * Version - 1.1.0
- * Licensed under the MIT license - http://opensource.org/licenses/MIT
+/**
+ * jQuery Vertical Scroll Plugin - Styles
+ * https://github.com/vineethkrishnan/jquery.verticalScroll.js
  *
- * Copyright (c) 2016 Vineeth Krishnan
+ * @version 2.0.0
+ * @author Vineeth Krishnan
+ * @license MIT - http://opensource.org/licenses/MIT
+ *
+ * Copyright (c) 2016-2024 Vineeth Krishnan
  */
 
- .vs-paginate{
- 	position: absolute;
- 	list-style: none;
- 	right: 10px;
- 	top: 20%;
- 	z-index: 1;
- }
+/* ==========================================================================
+   CSS Custom Properties (Variables)
+   ========================================================================== */
 
- .vs-paginate > li{
- 	list-style-type: none;
- }
+:root {
+    /* Default Theme Colors */
+    --vs-dot-color: #333333;
+    --vs-dot-active-color: #ffffff;
+    --vs-dot-border-color: #333333;
+    --vs-dot-hover-color: #666666;
+    --vs-tooltip-bg: #333333;
+    --vs-tooltip-color: #ffffff;
+    
+    /* Sizing */
+    --vs-dot-size: 12px;
+    --vs-dot-spacing: 12px;
+    --vs-dot-border-width: 2px;
+    
+    /* Animation */
+    --vs-transition-duration: 0.3s;
+    --vs-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
- .vs-paginate  li  a{
- 	background-color: #333;
- 	width: 5px;
- 	border-radius: 50%;
- 	height: 5px;
- 	display: block;
- 	padding: 5px;
- 	border: 1px solid #333;
- 	margin: 10px auto;
- 	transition: all 0.5s linear 0s;
- 	-o-transition: all 0.5s linear 0s;
- 	-ms-transition: all 0.5s linear 0s;
- 	-moz-transition: all 0.5s linear 0s;
- 	-webkit-transition: all 0.5s linear 0s;
- }
+/* ==========================================================================
+   Container Styles
+   ========================================================================== */
 
- .vs-paginate  li  a:active,
- .vs-paginate  li  a:focus{
- 	text-decoration: none;
- 	outline: none;
- }
- .vs-paginate  li  a:hover,
- .vs-paginate  li  a.vs-active
- {
- 	text-decoration: none;
- 	border: 1px solid #333;
- 	background-color: #fff;
- 	-webkit-animation-duration: 1s;
- 	animation-duration: 1s;
- 	-webkit-animation-fill-mode: both;
- 	animation-fill-mode: both;
- 	-webkit-animation-iteration-count: infinite;
- 	animation-iteration-count: infinite;
- 	-webkit-animation-name: pulse;
- 	animation-name: pulse;
- }
+.vs-container {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
 
+.vs-container.vs-disabled {
+    overflow: auto;
+}
 
+/* ==========================================================================
+   Section Styles
+   ========================================================================== */
 
+.vs-section {
+    position: relative;
+    min-height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-/*!
- * Originally Authored by Daniel Eden -http://daneden.me/animate
- */
- @-webkit-keyframes pulse {
- 	from {
- 		-webkit-transform: scale3d(1, 1, 1);
- 		transform: scale3d(1, 1, 1);
- 	}
+.vs-section:focus {
+    outline: none;
+}
 
- 	50% {
- 		-webkit-transform: scale3d(1.25, 1.25, 1.25);
- 		transform: scale3d(1.25, 1.25, 1.25);
- 	}
+.vs-section:focus-visible {
+    outline: 2px solid var(--vs-dot-active-color);
+    outline-offset: -2px;
+}
 
- 	to {
- 		-webkit-transform: scale3d(1, 1, 1);
- 		transform: scale3d(1, 1, 1);
- 	}
- }
+/* ==========================================================================
+   Pagination Navigation
+   ========================================================================== */
 
- @keyframes pulse {
- 	from {
- 		-webkit-transform: scale3d(1, 1, 1);
- 		transform: scale3d(1, 1, 1);
- 	}
+.vs-pagination {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    padding: 10px;
+}
 
- 	50% {
- 		-webkit-transform: scale3d(1.25, 1.25, 1.25);
- 		transform: scale3d(1.25, 1.25, 1.25);
- 	}
+.vs-pagination-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--vs-dot-spacing);
+}
 
- 	to {
- 		-webkit-transform: scale3d(1, 1, 1);
- 		transform: scale3d(1, 1, 1);
- 	}
- }
+.vs-pagination-item {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   Pagination Button
+   ========================================================================== */
+
+.vs-pagination-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--vs-dot-size) + var(--vs-dot-border-width) * 2);
+    height: calc(var(--vs-dot-size) + var(--vs-dot-border-width) * 2);
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: transform var(--vs-transition-duration) var(--vs-transition-easing);
+}
+
+.vs-pagination-button:hover {
+    transform: scale(1.2);
+}
+
+.vs-pagination-button:focus {
+    outline: none;
+}
+
+.vs-pagination-button:focus-visible {
+    outline: 2px solid var(--vs-dot-border-color);
+    outline-offset: 4px;
+    border-radius: 50%;
+}
+
+/* ==========================================================================
+   Pagination Dot
+   ========================================================================== */
+
+.vs-pagination-dot {
+    display: block;
+    width: var(--vs-dot-size);
+    height: var(--vs-dot-size);
+    border-radius: 50%;
+    background-color: var(--vs-dot-color);
+    border: var(--vs-dot-border-width) solid var(--vs-dot-border-color);
+    transition: all var(--vs-transition-duration) var(--vs-transition-easing);
+}
+
+.vs-pagination-button:hover .vs-pagination-dot {
+    background-color: var(--vs-dot-hover-color);
+}
+
+.vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+    background-color: var(--vs-dot-active-color);
+    transform: scale(1.1);
+    animation: vs-pulse 2s infinite;
+}
+
+/* ==========================================================================
+   Pagination Tooltip
+   ========================================================================== */
+
+.vs-pagination-tooltip {
+    position: absolute;
+    white-space: nowrap;
+    background-color: var(--vs-tooltip-bg);
+    color: var(--vs-tooltip-color);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--vs-transition-duration) var(--vs-transition-easing),
+                visibility var(--vs-transition-duration) var(--vs-transition-easing),
+                transform var(--vs-transition-duration) var(--vs-transition-easing);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Tooltip Arrow */
+.vs-pagination-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+}
+
+/* Right-positioned pagination (default) - tooltip on left */
+.vs-pagination[style*="right"] .vs-pagination-tooltip,
+.vs-pagination:not([style*="left"]) .vs-pagination-tooltip {
+    right: calc(100% + 15px);
+    transform: translateX(10px);
+}
+
+.vs-pagination[style*="right"] .vs-pagination-tooltip::before,
+.vs-pagination:not([style*="left"]) .vs-pagination-tooltip::before {
+    left: 100%;
+    border-left-color: var(--vs-tooltip-bg);
+}
+
+/* Left-positioned pagination - tooltip on right */
+.vs-pagination[style*="left"] .vs-pagination-tooltip {
+    left: calc(100% + 15px);
+    transform: translateX(-10px);
+}
+
+.vs-pagination[style*="left"] .vs-pagination-tooltip::before {
+    right: 100%;
+    border-right-color: var(--vs-tooltip-bg);
+}
+
+/* Show tooltip on hover */
+.vs-pagination-button:hover .vs-pagination-tooltip,
+.vs-pagination-button:focus-visible .vs-pagination-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* ==========================================================================
+   Theme: Default
+   ========================================================================== */
+
+.vs-theme-default {
+    --vs-dot-color: #333333;
+    --vs-dot-active-color: #ffffff;
+    --vs-dot-border-color: #333333;
+    --vs-dot-hover-color: #666666;
+    --vs-tooltip-bg: #333333;
+    --vs-tooltip-color: #ffffff;
+}
+
+/* ==========================================================================
+   Theme: Light
+   ========================================================================== */
+
+.vs-theme-light {
+    --vs-dot-color: #e0e0e0;
+    --vs-dot-active-color: #333333;
+    --vs-dot-border-color: #999999;
+    --vs-dot-hover-color: #cccccc;
+    --vs-tooltip-bg: #f5f5f5;
+    --vs-tooltip-color: #333333;
+}
+
+.vs-theme-light .vs-pagination-tooltip::before {
+    border-left-color: #f5f5f5;
+}
+
+.vs-theme-light .vs-pagination[style*="left"] .vs-pagination-tooltip::before {
+    border-right-color: #f5f5f5;
+    border-left-color: transparent;
+}
+
+/* ==========================================================================
+   Theme: Dark
+   ========================================================================== */
+
+.vs-theme-dark {
+    --vs-dot-color: #555555;
+    --vs-dot-active-color: #00bcd4;
+    --vs-dot-border-color: #777777;
+    --vs-dot-hover-color: #888888;
+    --vs-tooltip-bg: #1a1a1a;
+    --vs-tooltip-color: #ffffff;
+}
+
+.vs-theme-dark .vs-pagination-tooltip::before {
+    border-left-color: #1a1a1a;
+}
+
+.vs-theme-dark .vs-pagination[style*="left"] .vs-pagination-tooltip::before {
+    border-right-color: #1a1a1a;
+    border-left-color: transparent;
+}
+
+/* ==========================================================================
+   Theme: Minimal
+   ========================================================================== */
+
+.vs-theme-minimal {
+    --vs-dot-color: transparent;
+    --vs-dot-active-color: transparent;
+    --vs-dot-border-color: #333333;
+    --vs-dot-hover-color: rgba(51, 51, 51, 0.3);
+    --vs-dot-size: 8px;
+    --vs-dot-border-width: 1px;
+    --vs-tooltip-bg: #333333;
+    --vs-tooltip-color: #ffffff;
+}
+
+.vs-theme-minimal .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+    background-color: #333333;
+    animation: none;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes vs-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(51, 51, 51, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(51, 51, 51, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(51, 51, 51, 0);
+    }
+}
+
+/* Theme-specific pulse colors */
+.vs-theme-light .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+    animation-name: vs-pulse-light;
+}
+
+@keyframes vs-pulse-light {
+    0% {
+        box-shadow: 0 0 0 0 rgba(51, 51, 51, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(51, 51, 51, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(51, 51, 51, 0);
+    }
+}
+
+.vs-theme-dark .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+    animation-name: vs-pulse-dark;
+}
+
+@keyframes vs-pulse-dark {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(0, 188, 212, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 188, 212, 0);
+    }
+}
+
+/* ==========================================================================
+   Responsive / Mobile
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .vs-pagination {
+        display: none;
+    }
+    
+    .vs-container.vs-disabled .vs-pagination {
+        display: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .vs-pagination-dot {
+        border-width: 3px;
+    }
+    
+    .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+        background-color: #000000;
+        border-color: #ffffff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .vs-pagination-dot,
+    .vs-pagination-button,
+    .vs-pagination-tooltip {
+        transition: none;
+    }
+    
+    .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+        animation: none;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .vs-pagination {
+        display: none !important;
+    }
+    
+    .vs-container {
+        overflow: visible !important;
+        height: auto !important;
+    }
+    
+    .vs-section {
+        min-height: auto !important;
+        page-break-inside: avoid;
+    }
+}

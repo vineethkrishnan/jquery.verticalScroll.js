@@ -1,7 +1,11 @@
 module.exports = function(grunt) {
 
+  // Base name without scope for file paths
+  var baseName = 'jquery.verticalscroll';
+
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
+    baseName: baseName,
     uglify: {
      dist: {
       options: {
@@ -9,7 +13,7 @@ module.exports = function(grunt) {
        banner: '/*! <%= pkg.name %> | Vineeth N Krishnan (@way2vineeth) | <%= grunt.template.today("yyyy-mm-dd") %> | MIT Licensed */\n'
      },
      files: {
-       'dist/js/<%= pkg.name %>.min.js': ['src/js/**/*.js'],
+       'dist/js/<%= baseName %>.min.js': ['src/js/**/*.js'],
      }
    }
  },
@@ -20,7 +24,7 @@ module.exports = function(grunt) {
      banner: '/*! <%= pkg.name %> | Vineeth N Krishnan (@way2vineeth) | <%= grunt.template.today("yyyy-mm-dd") %> | MIT Licensed */\n'
    },
    files: {
-     'dist/css/<%= pkg.name %>.min.css': ['src/css/<%= pkg.name %>.css']
+     'dist/css/<%= baseName %>.min.css': ['src/css/jquery.verticalScroll.css']
    }
  }
 }

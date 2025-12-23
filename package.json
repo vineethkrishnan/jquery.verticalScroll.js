@@ -1,27 +1,64 @@
 {
-  "name": "jquery.verticalscroll",
-  "version": "1.0.0",
-  "description": "jQuery verticalScroll enables you to scroll sections in a smooth way",
-  "main": "index.js",
+  "name": "@vineethnkrishnan/jquery.verticalscroll",
+  "version": "2.0.0",
+  "description": "A lightweight, customizable jQuery plugin for creating smooth full-page vertical scrolling experiences with pagination, keyboard navigation, touch support, and accessibility features",
+  "main": "dist/js/jquery.verticalscroll.min.js",
+  "style": "dist/css/jquery.verticalscroll.min.css",
+  "browser": "dist/js/jquery.verticalscroll.min.js",
+  "unpkg": "dist/js/jquery.verticalscroll.min.js",
+  "jsdelivr": "dist/js/jquery.verticalscroll.min.js",
+  "files": [
+    "dist/",
+    "src/",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "scripts": {
-    "test": "grunt"
+    "build": "grunt",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/vineethkrishnan/jquery.verticalScroll.js.git"
+    "url": "git+https://github.com/vineethkrishnan/jquery.verticalScroll.js.git"
   },
   "keywords": [
-    "verticalScroll"
+    "jquery",
+    "jquery-plugin",
+    "scroll",
+    "vertical-scroll",
+    "fullpage",
+    "one-page",
+    "single-page",
+    "scrolling",
+    "smooth-scroll",
+    "pagination",
+    "sections",
+    "navigation",
+    "touch",
+    "swipe",
+    "keyboard",
+    "accessibility",
+    "a11y"
   ],
-  "author": "Vineeth Krishnan",
-  "license": "ISC",
+  "author": "Vineeth Krishnan <mail@vineethkrishnan.in> (http://vineethkrishnan.in)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues"
   },
   "homepage": "https://github.com/vineethkrishnan/jquery.verticalScroll.js#readme",
+  "peerDependencies": {
+    "jquery": ">=1.9.1"
+  },
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-cssmin": "^1.0.1",
-    "grunt-contrib-uglify": "^1.0.1"
+    "grunt": "^1.6.1",
+    "grunt-contrib-cssmin": "^5.0.0",
+    "grunt-contrib-uglify": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

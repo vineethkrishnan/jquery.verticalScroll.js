@@ -1,3 +1,32 @@
+# Dependencies
 node_modules/
-
 /vendor/
+
+# Build artifacts (optional - remove these lines if you want to commit dist/)
+# dist/
+
+# IDE/Editor
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.*
+
+# Package lock files (optional - some projects prefer to commit these)
+# package-lock.json
+# yarn.lock

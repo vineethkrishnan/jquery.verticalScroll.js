@@ -1,6 +1,6 @@
 # jQuery Vertical Scroll
 
-[![npm version](https://img.shields.io/npm/v/jquery.verticalscroll.svg)](https://www.npmjs.com/package/jquery.verticalscroll)
+[![npm version](https://img.shields.io/npm/v/@vineethnkrishnan/jquery.verticalscroll.svg)](https://www.npmjs.com/package/@vineethnkrishnan/jquery.verticalscroll)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![jQuery](https://img.shields.io/badge/jQuery-%3E%3D1.9.1-blue.svg)](https://jquery.com/)
 
@@ -24,23 +24,23 @@ A lightweight, customizable jQuery plugin for creating smooth full-page vertical
 ### NPM
 
 ```bash
-npm install jquery.verticalscroll
+npm install @vineethnkrishnan/jquery.verticalscroll
 ```
 
 ### Yarn
 
 ```bash
-yarn add jquery.verticalscroll
+yarn add @vineethnkrishnan/jquery.verticalscroll
 ```
 
 ### CDN
 
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://unpkg.com/jquery.verticalscroll/dist/css/jquery.verticalscroll.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@vineethnkrishnan/jquery.verticalscroll/dist/css/jquery.verticalscroll.min.css">
 
 <!-- JavaScript (after jQuery) -->
-<script src="https://unpkg.com/jquery.verticalscroll/dist/js/jquery.verticalscroll.min.js"></script>
+<script src="https://unpkg.com/@vineethnkrishnan/jquery.verticalscroll/dist/js/jquery.verticalscroll.min.js"></script>
 ```
 
 ### Manual Download

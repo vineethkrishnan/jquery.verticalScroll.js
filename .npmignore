@@ -1,0 +1,39 @@
+# Development files
+.git/
+.gitignore
+.github/
+
+# Build tools
+Gruntfile.js
+node_modules/
+
+# PHP/Composer (not needed for npm)
+composer.json
+vendor/
+
+# Documentation/Community files (included via files field, but explicit ignore for others)
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+_docs/
+
+# IDE/Editor
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Testing
+test/
+tests/
+*.test.js
+*.spec.js
+coverage/
+
+# Misc
+*.log
+npm-debug.log*
+.npmrc
+.env
+.env.*

@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Package renamed to `@vineethnkrishnan/jquery.verticalscroll` (scoped package)
+- Updated package.json with proper npm publishing configuration
+- Updated README with scoped package installation instructions
+
+### Added
+- Added `.npmignore` for cleaner npm package
+- Added CODE_OF_CONDUCT.md (Contributor Covenant)
+- Added CONTRIBUTING.md with development guidelines
+- Added `peerDependencies` for jQuery >=1.9.1
+- Added `publishConfig` for public npm access
+- Added CDN support fields (unpkg, jsdelivr)
+
+### Fixed
+- Fixed `main` entry point (was pointing to non-existent index.js)
+- Fixed license field (ISC → MIT to match LICENSE file)
+- Rebuilt outdated dist files
+
 ## [2.0.0] - 2024-12-15
 
 ### Added

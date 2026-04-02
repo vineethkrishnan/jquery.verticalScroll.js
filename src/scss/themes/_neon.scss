@@ -1,0 +1,31 @@
+// ==========================================================================
+// Theme: Neon — Glowing electric dots with neon box-shadow halos
+// ==========================================================================
+
+.vs-theme-neon,
+.vs-pagination.vs-theme-neon {
+  --vs-dot-color: transparent;
+  --vs-dot-active-color: #0ff;
+  --vs-dot-border-color: #0ff;
+  --vs-dot-hover-color: rgba(0, 255, 255, 0.3);
+  --vs-dot-size: 10px;
+  --vs-dot-border-width: 2px;
+  --vs-tooltip-bg: #0a0a2e;
+  --vs-tooltip-color: #0ff;
+}
+
+.vs-theme-neon .vs-pagination-dot,
+.vs-pagination.vs-theme-neon .vs-pagination-dot {
+  box-shadow: 0 0 4px #0ff, 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.vs-theme-neon .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-neon .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background: #0ff;
+  box-shadow: 0 0 6px #0ff, 0 0 14px #0ff, 0 0 28px rgba(0, 255, 255, 0.4);
+}
+
+.vs-theme-neon .vs-pagination-button:hover .vs-pagination-dot,
+.vs-pagination.vs-theme-neon .vs-pagination-button:hover .vs-pagination-dot {
+  box-shadow: 0 0 6px #0ff, 0 0 16px rgba(0, 255, 255, 0.5);
+}

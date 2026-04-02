@@ -1,0 +1,14 @@
+// ==========================================================================
+// Animation: Scale (breathe)
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('scale') {
+  animation: vs-scale 2s ease-in-out infinite;
+}
+
+@keyframes vs-scale {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.5); }
+}

@@ -1,0 +1,22 @@
+// ==========================================================================
+// Animation: Fade Ring
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('fade-ring') {
+  position: relative;
+  overflow: visible;
+
+  &::after {
+    @include vs-pseudo-overlay;
+    inset: -6px;
+    border: 2px solid var(--vs-dot-active-color, #333);
+    animation: vs-fade-ring 2s ease-in-out infinite;
+  }
+}
+
+@keyframes vs-fade-ring {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.15); }
+}

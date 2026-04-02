@@ -1,0 +1,22 @@
+// ==========================================================================
+// Animation: Ripple
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('ripple') {
+  position: relative;
+  overflow: visible;
+
+  &::after {
+    @include vs-pseudo-overlay;
+    inset: -4px;
+    border: 2px solid var(--vs-dot-active-color, #333);
+    animation: vs-ripple 1.8s ease-out infinite;
+  }
+}
+
+@keyframes vs-ripple {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}

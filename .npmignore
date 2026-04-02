@@ -30,6 +30,15 @@ tests/
 *.test.js
 *.spec.js
 coverage/
+jest.config.js
+playwright.config.js
+playwright-report/
+test-results/
+
+# Documentation & Demo sites
+docs/
+demo/
+.editorconfig
 
 # Misc
 *.log

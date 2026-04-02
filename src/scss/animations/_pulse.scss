@@ -1,0 +1,15 @@
+// ==========================================================================
+// Animation: Pulse
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('pulse') {
+  animation: vs-pulse 2s infinite;
+}
+
+@keyframes vs-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--vs-dot-active-color, rgba(51, 51, 51, 0.4)); }
+  70%  { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}

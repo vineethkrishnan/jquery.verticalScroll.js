@@ -1,0 +1,9 @@
+// ==========================================================================
+// Theme: Default
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+@include vs-theme('default', map.get($vs-themes, 'default'));

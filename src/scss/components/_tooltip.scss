@@ -1,0 +1,64 @@
+// ==========================================================================
+// Pagination Tooltip
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+
+.vs-pagination-tooltip {
+  position: absolute;
+  white-space: nowrap;
+  background-color: var(--vs-tooltip-bg);
+  color: var(--vs-tooltip-color);
+  padding: $vs-tooltip-padding;
+  border-radius: $vs-tooltip-border-radius;
+  font-size: $vs-tooltip-font-size;
+  font-family: $vs-tooltip-font-family;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--vs-transition-duration) var(--vs-transition-easing),
+              visibility var(--vs-transition-duration) var(--vs-transition-easing),
+              transform var(--vs-transition-duration) var(--vs-transition-easing);
+  pointer-events: none;
+  z-index: 10;
+
+  // Tooltip arrow
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: $vs-tooltip-arrow-size solid transparent;
+  }
+}
+
+// Right-positioned pagination (default) - tooltip on left
+.vs-pagination[style*="right"] .vs-pagination-tooltip,
+.vs-pagination:not([style*="left"]) .vs-pagination-tooltip {
+  right: calc(100% + #{$vs-tooltip-offset});
+  transform: translateX(10px);
+}
+
+.vs-pagination[style*="right"] .vs-pagination-tooltip::before,
+.vs-pagination:not([style*="left"]) .vs-pagination-tooltip::before {
+  left: 100%;
+  border-left-color: var(--vs-tooltip-bg);
+}
+
+// Left-positioned pagination - tooltip on right
+.vs-pagination[style*="left"] .vs-pagination-tooltip {
+  left: calc(100% + #{$vs-tooltip-offset});
+  transform: translateX(-10px);
+}
+
+.vs-pagination[style*="left"] .vs-pagination-tooltip::before {
+  right: 100%;
+  border-right-color: var(--vs-tooltip-bg);
+}
+
+// Show tooltip on hover/focus
+.vs-pagination-button:hover .vs-pagination-tooltip,
+.vs-pagination-button:focus-visible .vs-pagination-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}

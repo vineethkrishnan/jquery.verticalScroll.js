@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Vertical Scroll - Docs &amp; Demo</title>
+  <meta name="description" content="Interactive documentation and demo for jQuery Vertical Scroll plugin v2.0.0. Smooth full-page scrolling with pagination, themes, animations, and more.">
+
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" href="../src/css/jquery.verticalScroll.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+
+  <style>
+    /* ================================================================
+       CSS Custom Properties
+       ================================================================ */
+    :root {
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --glass-blur: 14px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 100px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ================================================================
+       Reset
+       ================================================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: #0f0c29;
+    }
+
+    #page {
+      height: 100vh;
+    }
+
+    /* ================================================================
+       Section Base
+       ================================================================ */
+    section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 40px 40px;
+    }
+
+    .section-inner {
+      width: 100%;
+      max-width: 1100px;
+      color: #fff;
+      z-index: 2;
+      position: relative;
+    }
+
+    .section-inner h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.3em;
+    }
+
+    .section-inner .section-lead {
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      font-weight: 300;
+      opacity: 0.9;
+      line-height: 1.65;
+      max-width: 600px;
+      margin-bottom: 1.8em;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.13);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 1.2em;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    /* ================================================================
+       Section Gradients — Default Theme
+       ================================================================ */
+    #sec-hero      { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    #sec-features  { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    #sec-playground{ background: linear-gradient(160deg, #0f0c29 0%, #302b63 50%, #24243e 100%); }
+    #sec-options   { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+    #sec-api       { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    #sec-events    { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    #sec-install   { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+    #sec-cta       { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+    /* Smooth theme transitions on sections */
+    section { transition: background 0.6s ease, color 0.4s ease; }
+
+    /* ── Dark page theme ────────────────────────────────────────── */
+    body.page-theme-dark #sec-hero      { background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%); }
+    body.page-theme-dark #sec-features  { background: linear-gradient(135deg, #16213e 0%, #0f3460 100%); }
+    body.page-theme-dark #sec-playground{ background: linear-gradient(160deg, #000000 0%, #1a1a2e 50%, #16213e 100%); }
+    body.page-theme-dark #sec-options   { background: linear-gradient(135deg, #0a0a0a 0%, #1b2838 100%); }
+    body.page-theme-dark #sec-api       { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); }
+    body.page-theme-dark #sec-events    { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%); }
+    body.page-theme-dark #sec-install   { background: linear-gradient(135deg, #0f0f1a 0%, #1e1e30 100%); }
+    body.page-theme-dark #sec-cta       { background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%); }
+    body.page-theme-dark .top-bar       { background: rgba(0, 0, 0, 0.6); }
+    body.page-theme-dark                { background: #0d0d0d; }
+
+    /* ── Light page theme ───────────────────────────────────────── */
+    body.page-theme-light #sec-hero      { background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%); }
+    body.page-theme-light #sec-features  { background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); }
+    body.page-theme-light #sec-playground{ background: linear-gradient(160deg, #e8eaf6 0%, #c5cae9 50%, #e8eaf6 100%); }
+    body.page-theme-light #sec-options   { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); }
+    body.page-theme-light #sec-api       { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); }
+    body.page-theme-light #sec-events    { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); }
+    body.page-theme-light #sec-install   { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); }
+    body.page-theme-light #sec-cta       { background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%); }
+    body.page-theme-light section        { color: #1a1a2e; }
+    body.page-theme-light section h1,
+    body.page-theme-light section h2     { color: #1a1a2e; }
+    body.page-theme-light section p,
+    body.page-theme-light .section-lead  { color: #444; }
+    body.page-theme-light .badge         { background: rgba(0,0,0,0.08); color: #333; border-color: rgba(0,0,0,0.12); }
+    body.page-theme-light .glass-card    { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: #333; }
+    body.page-theme-light .glass-card h3 { color: #1a1a2e; }
+    body.page-theme-light .glass-card p  { color: #555; }
+    body.page-theme-light .top-bar       { background: rgba(255,255,255,0.85); }
+    body.page-theme-light .top-bar,
+    body.page-theme-light .top-bar a,
+    body.page-theme-light .top-bar select,
+    body.page-theme-light #header-counter{ color: #333; }
+    body.page-theme-light .top-bar select{ background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.15); color: #333; }
+    body.page-theme-light .code-block    { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.1); }
+    body.page-theme-light .code-block code { color: #333; }
+    body.page-theme-light .hl-fn         { color: #0d47a1; }
+    body.page-theme-light .hl-str        { color: #2e7d32; }
+    body.page-theme-light .hl-pr         { color: #6a1b9a; }
+    body.page-theme-light .scroll-hint   { color: rgba(0,0,0,0.4); }
+    body.page-theme-light .scroll-hint::after { border-color: rgba(0,0,0,0.3); }
+    body.page-theme-light                { background: #f5f7fa; }
+
+    /* ── Minimal page theme ─────────────────────────────────────── */
+    body.page-theme-minimal #sec-hero      { background: #ffffff; }
+    body.page-theme-minimal #sec-features  { background: #fafafa; }
+    body.page-theme-minimal #sec-playground{ background: #f5f5f5; }
+    body.page-theme-minimal #sec-options   { background: #ffffff; }
+    body.page-theme-minimal #sec-api       { background: #fafafa; }
+    body.page-theme-minimal #sec-events    { background: #f5f5f5; }
+    body.page-theme-minimal #sec-install   { background: #ffffff; }
+    body.page-theme-minimal #sec-cta       { background: #fafafa; }
+    body.page-theme-minimal section        { color: #222; }
+    body.page-theme-minimal section h1,
+    body.page-theme-minimal section h2     { color: #111; }
+    body.page-theme-minimal section p,
+    body.page-theme-minimal .section-lead  { color: #555; }
+    body.page-theme-minimal .badge         { background: #eee; color: #333; border-color: #ddd; }
+    body.page-theme-minimal .glass-card    { background: #fff; border: 1px solid #e0e0e0; color: #333; backdrop-filter: none; }
+    body.page-theme-minimal .glass-card h3 { color: #111; }
+    body.page-theme-minimal .glass-card p  { color: #555; }
+    body.page-theme-minimal .top-bar       { background: #fff; border-bottom: 1px solid #e0e0e0; }
+    body.page-theme-minimal .top-bar,
+    body.page-theme-minimal .top-bar a,
+    body.page-theme-minimal .top-bar select,
+    body.page-theme-minimal #header-counter{ color: #333; }
+    body.page-theme-minimal .top-bar select{ background: #f5f5f5; border-color: #ddd; color: #333; }
+    body.page-theme-minimal .code-block    { background: #f5f5f5; border-color: #e0e0e0; }
+    body.page-theme-minimal .code-block code { color: #333; }
+    body.page-theme-minimal .hl-fn         { color: #0d47a1; }
+    body.page-theme-minimal .hl-str        { color: #2e7d32; }
+    body.page-theme-minimal .hl-pr         { color: #6a1b9a; }
+    body.page-theme-minimal .scroll-hint   { color: rgba(0,0,0,0.3); }
+    body.page-theme-minimal .scroll-hint::after { border-color: rgba(0,0,0,0.2); }
+    body.page-theme-minimal                { background: #fff; }
+
+    /* ── Playground buttons for light/minimal themes ─────────── */
+    body.page-theme-light .pg-btn,
+    body.page-theme-minimal .pg-btn {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.15);
+      color: #444;
+    }
+    body.page-theme-light .pg-btn:hover,
+    body.page-theme-minimal .pg-btn:hover {
+      background: rgba(0, 0, 0, 0.12);
+      color: #111;
+      border-color: rgba(0, 0, 0, 0.3);
+    }
+    body.page-theme-light .pg-btn.active,
+    body.page-theme-minimal .pg-btn.active {
+      background: rgba(0, 0, 0, 0.15);
+      border-color: #333;
+      color: #111;
+    }
+    body.page-theme-light .pg-label,
+    body.page-theme-minimal .pg-label { color: #666; }
+    body.page-theme-light .pg-value,
+    body.page-theme-minimal .pg-value { color: #111; }
+
+    /* ── Tables & options for light/minimal ───────────────────── */
+    body.page-theme-light .opt-table th,
+    body.page-theme-minimal .opt-table th { background: rgba(0,0,0,0.06); color: #333; }
+    body.page-theme-light .opt-table td,
+    body.page-theme-minimal .opt-table td { border-color: #e0e0e0; color: #444; }
+    body.page-theme-light .opt-name,
+    body.page-theme-minimal .opt-name { color: #0d47a1; }
+
+    /* ── API cards for light/minimal ──────────────────────────── */
+    body.page-theme-light .api-card,
+    body.page-theme-minimal .api-card { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); }
+    body.page-theme-light .api-name,
+    body.page-theme-minimal .api-name { color: #0d47a1; }
+    body.page-theme-light .api-sig,
+    body.page-theme-minimal .api-sig { color: #555; }
+    body.page-theme-light .api-example,
+    body.page-theme-minimal .api-example { color: #333; background: rgba(0,0,0,0.04); }
+
+    /* ── CTA buttons for light/minimal ───────────────────────── */
+    body.page-theme-light .btn-primary,
+    body.page-theme-minimal .btn-primary { background: #333; color: #fff; }
+    body.page-theme-light .btn-outline,
+    body.page-theme-minimal .btn-outline { border-color: #333; color: #333; }
+    body.page-theme-light .btn-outline:hover,
+    body.page-theme-minimal .btn-outline:hover { background: #333; color: #fff; }
+
+    /* ================================================================
+       SVG Pattern Overlays
+       ================================================================ */
+    section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #sec-hero::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    #sec-features::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    #sec-playground::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1.5'/%3E%3Ccircle cx='13' cy='13' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.06;
+    }
+
+    #sec-options::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='1' stroke-width='1'%3E%3Cpath d='M0 0l40 40M40 0l40 40M0 40l40 40M40 40l40 40' /%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    #sec-api::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    #sec-events::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpolygon points='12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5'/%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.03;
+    }
+
+    #sec-install::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+
+    #sec-cta::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Radial glow decorations */
+    section::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 60%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ================================================================
+       Fixed Header Bar
+       ================================================================ */
+    .header-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-logo {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .header-logo span {
+      opacity: 0.5;
+      font-weight: 400;
+      font-size: 12px;
+      margin-left: 6px;
+    }
+
+    .header-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .header-center strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 6px 28px 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      outline: none;
+      transition: background var(--transition);
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ffffff' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .header-select:hover {
+      background-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .header-select option {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    .header-github {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: all var(--transition);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .header-github:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .header-github svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ================================================================
+       HERO Section
+       ================================================================ */
+    #sec-hero .section-inner {
+      text-align: center;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    #sec-hero h1 {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 0.3em;
+      color: #fff;
+    }
+
+    #sec-hero .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      opacity: 0.88;
+      line-height: 1.7;
+      margin-bottom: 2em;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 6px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 1.5em;
+      letter-spacing: 0.5px;
+    }
+
+    .version-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+    }
+
+    .install-block {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 14px 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: #e0e0e0;
+      margin-bottom: 2em;
+    }
+
+    .install-block .prompt {
+      color: #4ade80;
+      user-select: none;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 30px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      text-decoration: none;
+      transition: all var(--transition);
+      border: 2px solid transparent;
+      cursor: pointer;
+      letter-spacing: 0.2px;
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: #667eea;
+      border-color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-outline:hover {
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 12px;
+      font-weight: 400;
+      text-align: center;
+      z-index: 2;
+      animation: hint-bounce 2.5s infinite;
+    }
+
+    .scroll-hint svg {
+      display: block;
+      margin: 6px auto 0;
+      opacity: 0.5;
+    }
+
+    @keyframes hint-bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-8px); }
+      60% { transform: translateX(-50%) translateY(-4px); }
+    }
+
+    /* ================================================================
+       Glass Card
+       ================================================================ */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+    }
+
+    /* ================================================================
+       FEATURES Section
+       ================================================================ */
+    #sec-features .section-inner { text-align: center; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 1em;
+    }
+
+    .feature-card {
+      padding: 26px 18px;
+      text-align: center;
+      transition: transform var(--transition), background var(--transition);
+      cursor: default;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.17);
+    }
+
+    .feature-card .f-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+      display: block;
+      line-height: 1;
+    }
+
+    .feature-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .feature-card p {
+      font-size: 12px;
+      opacity: 0.78;
+      line-height: 1.45;
+    }
+
+    /* ================================================================
+       PLAYGROUND Section
+       ================================================================ */
+    #sec-playground {
+      align-items: flex-start;
+      padding-top: 90px;
+    }
+
+    #sec-playground .section-inner {
+      text-align: center;
+    }
+
+    .pg-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .pg-btn {
+      padding: 9px 20px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .pg-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .pg-btn.active {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: #fff;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .pg-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.5;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .pg-current {
+      margin: 16px 0 12px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    .pg-current strong {
+      color: #fff;
+      opacity: 1;
+    }
+
+    .pg-code {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 20px 28px;
+      text-align: left;
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .pg-code code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.75;
+      color: #e0e0e0;
+      white-space: pre;
+      display: block;
+    }
+
+    /* ================================================================
+       CODE BLOCK utility
+       ================================================================ */
+    .code-block {
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      text-align: left;
+      overflow-x: auto;
+    }
+
+    .code-block code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: #e0e0e0;
+      white-space: pre;
+      display: block;
+    }
+
+    .hl-kw  { color: #c792ea; }
+    .hl-str { color: #c3e88d; }
+    .hl-fn  { color: #82aaff; }
+    .hl-cm  { color: #676e95; }
+    .hl-num { color: #f78c6c; }
+    .hl-pr  { color: #ffcb6b; }
+    .hl-op  { color: #89ddff; }
+
+    /* ================================================================
+       OPTIONS Section - Table
+       ================================================================ */
+    #sec-options {
+      align-items: flex-start;
+      padding-top: 80px;
+      overflow-y: auto;
+    }
+
+    .opts-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 0.8em;
+    }
+
+    .opts-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    .opts-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.6;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .opts-table td {
+      padding: 6px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      vertical-align: top;
+    }
+
+    .opts-table .opt-name {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 12px;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .opts-table .opt-type {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      opacity: 0.65;
+      white-space: nowrap;
+    }
+
+    .opts-table .opt-default {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #c3e88d;
+      white-space: nowrap;
+    }
+
+    .opts-table .opt-desc {
+      font-size: 12px;
+      opacity: 0.85;
+      line-height: 1.45;
+    }
+
+    .opts-group-label td {
+      padding: 14px 12px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.4;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ================================================================
+       API Section
+       ================================================================ */
+    #sec-api {
+      align-items: flex-start;
+      padding-top: 80px;
+    }
+
+    .api-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 0.8em;
+    }
+
+    .api-card {
+      padding: 16px 18px;
+    }
+
+    .api-card .api-name {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .api-card .api-sig {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      opacity: 0.5;
+      margin-bottom: 6px;
+    }
+
+    .api-card .api-desc {
+      font-size: 12px;
+      opacity: 0.8;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+
+    .api-card .api-example {
+      background: rgba(0,0,0,0.2);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #c3e88d;
+      overflow-x: auto;
+    }
+
+    /* ================================================================
+       EVENTS Section
+       ================================================================ */
+    #sec-events {
+      align-items: flex-start;
+      padding-top: 80px;
+    }
+
+    .events-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 0.8em;
+    }
+
+    .event-card {
+      padding: 18px 20px;
+    }
+
+    .event-card .ev-name {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .event-card .ev-jquery {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      opacity: 0.45;
+      margin-bottom: 8px;
+    }
+
+    .event-card .ev-sig {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      opacity: 0.6;
+      margin-bottom: 6px;
+    }
+
+    .event-card .ev-desc {
+      font-size: 12px;
+      opacity: 0.82;
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    .event-card .ev-example {
+      background: rgba(0,0,0,0.18);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #e0e0e0;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* ================================================================
+       INSTALL Section
+       ================================================================ */
+    #sec-install {
+      align-items: flex-start;
+      padding-top: 80px;
+    }
+
+    .install-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 0.8em;
+    }
+
+    .install-step {
+      padding: 20px;
+    }
+
+    .install-step .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .install-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .install-step .step-code {
+      background: rgba(0,0,0,0.2);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: #e0e0e0;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* ================================================================
+       CTA Section
+       ================================================================ */
+    #sec-cta .section-inner {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .cta-links {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.5em;
+    }
+
+    .license-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2em;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    .author-info {
+      margin-top: 1.2em;
+      font-size: 13px;
+      opacity: 0.5;
+    }
+
+    .author-info a {
+      color: #fff;
+      opacity: 0.8;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ================================================================
+       Scrollbar (inside #page)
+       ================================================================ */
+    #page::-webkit-scrollbar { width: 0; }
+
+    /* ================================================================
+       Responsive
+       ================================================================ */
+    @media (max-width: 900px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .api-grid,
+      .events-list,
+      .install-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 70px 20px 30px;
+      }
+
+      .header-bar { padding: 0 14px; }
+
+      .header-center { display: none; }
+
+      .header-select { font-size: 11px; padding: 5px 24px 5px 10px; }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .feature-card { padding: 18px 12px; }
+      .feature-card .f-icon { font-size: 24px; }
+
+      .pg-btn { padding: 7px 14px; font-size: 12px; }
+
+      .opts-table { font-size: 11px; }
+
+      .hero-buttons { flex-direction: column; align-items: center; }
+
+      .install-block { font-size: 12px; padding: 10px 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .features-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      #sec-hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       Fixed Header Bar
+       ================================================================ -->
+  <div class="header-bar">
+    <div class="header-left">
+      <a href="https://jquery-vertical-scroll-docs.vineethnk.in" class="header-logo" target="_blank">
+        VS <span>v2.0.0</span>
+      </a>
+    </div>
+
+    <div class="header-center" id="header-counter">
+      <strong>1</strong> / 8
+    </div>
+
+    <div class="header-right">
+      <select class="header-select" id="sel-theme" aria-label="Theme">
+        <optgroup label="Classic">
+          <option value="default">Default</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="minimal">Minimal</option>
+        </optgroup>
+        <optgroup label="Creative">
+          <option value="neon">Neon</option>
+          <option value="git-graph">Git Graph</option>
+          <option value="sound-wave">Sound Wave</option>
+          <option value="diamond">Diamond</option>
+          <option value="arrow">Arrow</option>
+          <option value="pill">Pill</option>
+          <option value="electric">Electric</option>
+          <option value="line-connect">Line Connect</option>
+          <option value="chain">Chain</option>
+        </optgroup>
+      </select>
+
+      <select class="header-select" id="sel-animation" aria-label="Animation">
+        <optgroup label="Classic">
+          <option value="pulse">Pulse</option>
+          <option value="glow">Glow</option>
+          <option value="bounce">Bounce</option>
+          <option value="ripple">Ripple</option>
+          <option value="scale">Scale</option>
+          <option value="fade-ring">Fade Ring</option>
+          <option value="rotate">Rotate</option>
+          <option value="morph">Morph</option>
+          <option value="heartbeat">Heartbeat</option>
+          <option value="radar">Radar</option>
+        </optgroup>
+        <optgroup label="Theme-matched">
+          <option value="neon-flicker">Neon Flicker</option>
+          <option value="wave">Wave</option>
+          <option value="diamond-spin">Diamond Spin</option>
+          <option value="electric-zap">Electric Zap</option>
+          <option value="slide-in">Slide In</option>
+          <option value="chain-pop">Chain Pop</option>
+        </optgroup>
+        <option value="none">None</option>
+      </select>
+
+      <a href="https://github.com/vineethkrishnan/jquery.verticalScroll.js" class="header-github" target="_blank" aria-label="GitHub Repository">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       Main Scrollable Container
+       ================================================================ -->
+  <div id="page">
+
+    <!-- ============================================================
+         Section 1: Hero
+         ============================================================ -->
+    <section id="sec-hero" data-vs-label="Hero">
+      <div class="section-inner">
+        <div class="version-badge"><span class="dot"></span> v2.0.0 &mdash; Stable</div>
+        <h1>jQuery Vertical Scroll</h1>
+        <p class="tagline">
+          A lightweight, customizable jQuery plugin for creating smooth, full-page vertical scrolling experiences with pagination, themes, and animations.
+        </p>
+        <div class="install-block">
+          <span class="prompt">$</span> npm install @vineethnkrishnan/jquery.verticalscroll
+        </div>
+        <div class="hero-buttons">
+          <a href="#sec-install" class="btn btn-primary" onclick="event.preventDefault(); $('#page').verticalScroll('scrollToSection', 6);">Get Started</a>
+          <a href="https://github.com/vineethkrishnan/jquery.verticalScroll.js" class="btn btn-outline" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        Scroll or use arrow keys
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 2: Features
+         ============================================================ -->
+    <section id="sec-features" data-vs-label="Features">
+      <div class="section-inner">
+        <div class="badge">Why Choose This Plugin</div>
+        <h2>Packed with Features</h2>
+        <p class="section-lead">Everything you need for a smooth scrolling experience, right out of the box.</p>
+        <div class="features-grid">
+          <div class="feature-card glass">
+            <span class="f-icon">&#128433;</span>
+            <h3>Mouse Wheel</h3>
+            <p>Smooth section-by-section scrolling with configurable threshold</p>
+          </div>
+          <div class="feature-card glass">
+            <span class="f-icon">&#9000;</span>
+            <h3>Keyboard Nav</h3>
+            <p>Arrow keys, Page Up/Down, Home &amp; End key support</p>
+          </div>
+          <div class="feature-card glass">
+            <span class="f-icon">&#128400;</span>
+            <h3>Touch &amp; Swipe</h3>
+            <p>Mobile-friendly touch gestures with adjustable sensitivity</p>
+          </div>
+          <div class="feature-card glass">
+            <span class="f-icon">&#9673;</span>
+            <h3>Pagination Dots</h3>
+            <p>Animated navigation dots with hover tooltips and click support</p>
+          </div>
+          <div class="feature-card glass">
+            <span class="f-icon">&#127912;</span>
+            <h3>12 Themes</h3>
+            <p>Classic, Neon, Git Graph, Sound Wave, Diamond, Arrow, Pill &amp; more</p>
+          </div>
+          <div class="feature-card glass">
+            <span class="f-icon">&#10024;</span>
+            <h3>15 Animations</h3>
+            <p>Pulse, Glow, Bounce, Neon Flicker, Electric Zap, Wave &amp; more</p>
+          </div>
+          <div class="feature-card glass">
+            <span class="f-icon">&#9855;</span>
+            <h3>Accessible</h3>
+            <p>Full ARIA labels, focus management, and screen reader support</p>
+          </div>
+          <div class="feature-card glass">
+            <span class="f-icon">&#128241;</span>
+            <h3>Responsive</h3>
+            <p>Auto-disables below configurable breakpoint for mobile</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 3: Live Theme & Animation Playground
+         ============================================================ -->
+    <section id="sec-playground" data-vs-label="Playground">
+      <div class="section-inner">
+        <div class="badge">Interactive</div>
+        <h2>Theme &amp; Animation Playground</h2>
+        <p class="section-lead" style="margin-left:auto;margin-right:auto;text-align:center;">Click buttons to live-switch the theme and pagination animation. Watch the dots on the right update in real-time.</p>
+
+        <div class="pg-label">Theme</div>
+        <div class="pg-row" id="pg-themes">
+          <button class="pg-btn active" data-theme="default">Default</button>
+          <button class="pg-btn" data-theme="light">Light</button>
+          <button class="pg-btn" data-theme="dark">Dark</button>
+          <button class="pg-btn" data-theme="minimal">Minimal</button>
+          <button class="pg-btn" data-theme="neon">Neon</button>
+          <button class="pg-btn" data-theme="git-graph">Git Graph</button>
+          <button class="pg-btn" data-theme="sound-wave">Sound Wave</button>
+          <button class="pg-btn" data-theme="diamond">Diamond</button>
+          <button class="pg-btn" data-theme="arrow">Arrow</button>
+          <button class="pg-btn" data-theme="pill">Pill</button>
+          <button class="pg-btn" data-theme="electric">Electric</button>
+          <button class="pg-btn" data-theme="line-connect">Line Connect</button>
+          <button class="pg-btn" data-theme="chain">Chain</button>
+        </div>
+
+        <div class="pg-label">Pagination Animation</div>
+        <div class="pg-row" id="pg-animations">
+          <button class="pg-btn active" data-anim="pulse">Pulse</button>
+          <button class="pg-btn" data-anim="glow">Glow</button>
+          <button class="pg-btn" data-anim="bounce">Bounce</button>
+          <button class="pg-btn" data-anim="ripple">Ripple</button>
+          <button class="pg-btn" data-anim="scale">Scale</button>
+          <button class="pg-btn" data-anim="fade-ring">Fade Ring</button>
+          <button class="pg-btn" data-anim="rotate">Rotate</button>
+          <button class="pg-btn" data-anim="morph">Morph</button>
+          <button class="pg-btn" data-anim="heartbeat">Heartbeat</button>
+          <button class="pg-btn" data-anim="radar">Radar</button>
+          <button class="pg-btn" data-anim="neon-flicker">Neon Flicker</button>
+          <button class="pg-btn" data-anim="wave">Wave</button>
+          <button class="pg-btn" data-anim="diamond-spin">Diamond Spin</button>
+          <button class="pg-btn" data-anim="electric-zap">Electric Zap</button>
+          <button class="pg-btn" data-anim="slide-in">Slide In</button>
+          <button class="pg-btn" data-anim="chain-pop">Chain Pop</button>
+          <button class="pg-btn" data-anim="none">None</button>
+        </div>
+
+        <div class="pg-current">
+          Theme: <strong id="pg-theme-name">default</strong> &nbsp;&bull;&nbsp; Animation: <strong id="pg-anim-name">pulse</strong>
+        </div>
+
+        <div class="pg-code" style="margin: 0 auto;">
+          <code id="pg-code-preview"><span class="hl-fn">$</span>(<span class="hl-str">'#page'</span>).<span class="hl-fn">verticalScroll</span>({
+    <span class="hl-pr">theme</span>: <span class="hl-str">'default'</span>,
+    <span class="hl-pr">paginationAnimation</span>: <span class="hl-str">'pulse'</span>
+});</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 4: Configuration Options
+         ============================================================ -->
+    <section id="sec-options" data-vs-label="Options">
+      <div class="section-inner">
+        <div class="badge">Configuration</div>
+        <h2>All Plugin Options</h2>
+        <p class="section-lead">Every option at a glance. Pass these when initializing or via <code style="background:rgba(0,0,0,0.2);padding:2px 6px;border-radius:4px;font-size:12px;">setOptions()</code>.</p>
+        <div class="opts-table-wrap glass" style="padding: 6px 12px;">
+          <table class="opts-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr class="opts-group-label"><td colspan="4">Selectors</td></tr>
+              <tr><td class="opt-name">selector</td><td class="opt-type">string</td><td class="opt-default">'section'</td><td class="opt-desc">CSS selector for scrollable sections</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Navigation</td></tr>
+              <tr><td class="opt-name">pagination</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Show pagination dots</td></tr>
+              <tr><td class="opt-name">paginationPosition</td><td class="opt-type">string</td><td class="opt-default">'right'</td><td class="opt-desc">Position: 'left' or 'right'</td></tr>
+              <tr><td class="opt-name">paginationOffset</td><td class="opt-type">number</td><td class="opt-default">20</td><td class="opt-desc">Offset from edge in pixels</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Scrolling</td></tr>
+              <tr><td class="opt-name">animationDuration</td><td class="opt-type">number</td><td class="opt-default">800</td><td class="opt-desc">Scroll animation duration in ms</td></tr>
+              <tr><td class="opt-name">easing</td><td class="opt-type">string</td><td class="opt-default">'swing'</td><td class="opt-desc">jQuery easing function name</td></tr>
+              <tr><td class="opt-name">scrollThreshold</td><td class="opt-type">number</td><td class="opt-default">50</td><td class="opt-desc">Minimum scroll delta to trigger navigation</td></tr>
+              <tr><td class="opt-name">touchThreshold</td><td class="opt-type">number</td><td class="opt-default">50</td><td class="opt-desc">Minimum touch delta to trigger navigation</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Input Methods</td></tr>
+              <tr><td class="opt-name">mouseWheel</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Enable mouse wheel navigation</td></tr>
+              <tr><td class="opt-name">keyboard</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Enable keyboard navigation (arrows, Page Up/Down, Home/End)</td></tr>
+              <tr><td class="opt-name">touch</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Enable touch/swipe navigation</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Behavior</td></tr>
+              <tr><td class="opt-name">loop</td><td class="opt-type">boolean</td><td class="opt-default">false</td><td class="opt-desc">Loop back to first/last section</td></tr>
+              <tr><td class="opt-name">autoScroll</td><td class="opt-type">boolean</td><td class="opt-default">false</td><td class="opt-desc">Enable automatic scrolling</td></tr>
+              <tr><td class="opt-name">autoScrollInterval</td><td class="opt-type">number</td><td class="opt-default">5000</td><td class="opt-desc">Auto-scroll interval in milliseconds</td></tr>
+              <tr><td class="opt-name">pauseOnHover</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Pause auto-scroll on mouse hover</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Accessibility</td></tr>
+              <tr><td class="opt-name">ariaLabels</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Add ARIA labels to sections and navigation</td></tr>
+              <tr><td class="opt-name">focusOnSection</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Focus section element after navigation</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Responsive</td></tr>
+              <tr><td class="opt-name">responsive</td><td class="opt-type">boolean</td><td class="opt-default">true</td><td class="opt-desc">Enable responsive behavior</td></tr>
+              <tr><td class="opt-name">mobileBreakpoint</td><td class="opt-type">number</td><td class="opt-default">768</td><td class="opt-desc">Disable plugin below this viewport width</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Theming</td></tr>
+              <tr><td class="opt-name">theme</td><td class="opt-type">string</td><td class="opt-default">'default'</td><td class="opt-desc">Theme: 'default', 'light', 'dark', 'minimal'</td></tr>
+              <tr><td class="opt-name">paginationAnimation</td><td class="opt-type">string</td><td class="opt-default">'pulse'</td><td class="opt-desc">Dot animation: 'none', 'pulse', 'glow', 'bounce', 'ripple', 'scale', 'fade-ring', 'rotate', 'morph', 'heartbeat', 'radar'</td></tr>
+
+              <tr class="opts-group-label"><td colspan="4">Callbacks</td></tr>
+              <tr><td class="opt-name">onInit</td><td class="opt-type">function</td><td class="opt-default">null</td><td class="opt-desc">Called after initialization</td></tr>
+              <tr><td class="opt-name">onDestroy</td><td class="opt-type">function</td><td class="opt-default">null</td><td class="opt-desc">Called after destruction</td></tr>
+              <tr><td class="opt-name">onBeforeScroll</td><td class="opt-type">function</td><td class="opt-default">null</td><td class="opt-desc">Called before scrolling (return false to cancel)</td></tr>
+              <tr><td class="opt-name">onAfterScroll</td><td class="opt-type">function</td><td class="opt-default">null</td><td class="opt-desc">Called after scroll animation completes</td></tr>
+              <tr><td class="opt-name">onSectionChange</td><td class="opt-type">function</td><td class="opt-default">null</td><td class="opt-desc">Called when active section changes</td></tr>
+              <tr><td class="opt-name">onResize</td><td class="opt-type">function</td><td class="opt-default">null</td><td class="opt-desc">Called on window resize</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 5: API Methods
+         ============================================================ -->
+    <section id="sec-api" data-vs-label="API">
+      <div class="section-inner">
+        <div class="badge">Developer API</div>
+        <h2>13 Public Methods</h2>
+        <p class="section-lead">Navigate, query, and control every aspect of the plugin programmatically.</p>
+        <div class="api-grid">
+          <div class="api-card glass">
+            <div class="api-name">scrollToSection</div>
+            <div class="api-sig">(index, animate?) &rarr; Deferred</div>
+            <div class="api-desc">Scroll to section by zero-based index</div>
+            <div class="api-example">$('#page').verticalScroll('scrollToSection', 2);</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">scrollToId</div>
+            <div class="api-sig">(id) &rarr; Deferred</div>
+            <div class="api-desc">Scroll to section by its HTML id</div>
+            <div class="api-example">$('#page').verticalScroll('scrollToId', 'contact');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">next</div>
+            <div class="api-sig">() &rarr; Deferred</div>
+            <div class="api-desc">Navigate to the next section</div>
+            <div class="api-example">$('#page').verticalScroll('next');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">prev</div>
+            <div class="api-sig">() &rarr; Deferred</div>
+            <div class="api-desc">Navigate to the previous section</div>
+            <div class="api-example">$('#page').verticalScroll('prev');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">getCurrentIndex</div>
+            <div class="api-sig">() &rarr; number</div>
+            <div class="api-desc">Get the current active section index</div>
+            <div class="api-example">var i = $('#page').verticalScroll('getCurrentIndex');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">getCurrentSection</div>
+            <div class="api-sig">() &rarr; jQuery</div>
+            <div class="api-desc">Get the current section as a jQuery object</div>
+            <div class="api-example">var $s = $('#page').verticalScroll('getCurrentSection');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">getSections</div>
+            <div class="api-sig">() &rarr; jQuery</div>
+            <div class="api-desc">Get all section elements</div>
+            <div class="api-example">var $all = $('#page').verticalScroll('getSections');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">getSectionCount</div>
+            <div class="api-sig">() &rarr; number</div>
+            <div class="api-desc">Get total number of sections</div>
+            <div class="api-example">var n = $('#page').verticalScroll('getSectionCount');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">enable</div>
+            <div class="api-sig">() &rarr; void</div>
+            <div class="api-desc">Re-enable the plugin after disabling</div>
+            <div class="api-example">$('#page').verticalScroll('enable');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">disable</div>
+            <div class="api-sig">() &rarr; void</div>
+            <div class="api-desc">Disable scrolling without destroying</div>
+            <div class="api-example">$('#page').verticalScroll('disable');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">refresh</div>
+            <div class="api-sig">() &rarr; void</div>
+            <div class="api-desc">Recalculate section positions after DOM changes</div>
+            <div class="api-example">$('#page').verticalScroll('refresh');</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">setOptions</div>
+            <div class="api-sig">(options) &rarr; void</div>
+            <div class="api-desc">Update options at runtime (theme, animation, etc.)</div>
+            <div class="api-example">$('#page').verticalScroll('setOptions', { theme: 'dark' });</div>
+          </div>
+          <div class="api-card glass">
+            <div class="api-name">destroy</div>
+            <div class="api-sig">() &rarr; void</div>
+            <div class="api-desc">Remove plugin, restore original DOM state</div>
+            <div class="api-example">$('#page').verticalScroll('destroy');</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 6: Events & Callbacks
+         ============================================================ -->
+    <section id="sec-events" data-vs-label="Events">
+      <div class="section-inner">
+        <div class="badge">Hooks</div>
+        <h2>Events &amp; Callbacks</h2>
+        <p class="section-lead">Six lifecycle callbacks plus jQuery event equivalents for full integration control.</p>
+        <div class="events-list">
+          <div class="event-card glass">
+            <div class="ev-name">onInit</div>
+            <div class="ev-jquery">Event: verticalScroll:init</div>
+            <div class="ev-sig">function(index, $section)</div>
+            <div class="ev-desc">Fires after the plugin initializes. Receives the initial section index and element.</div>
+            <div class="ev-example">onInit: function(index, $section) {
+  console.log('Ready at section', index);
+}</div>
+          </div>
+          <div class="event-card glass">
+            <div class="ev-name">onDestroy</div>
+            <div class="ev-jquery">Event: verticalScroll:destroy</div>
+            <div class="ev-sig">function()</div>
+            <div class="ev-desc">Fires after the plugin is destroyed and DOM is restored.</div>
+            <div class="ev-example">onDestroy: function() {
+  console.log('Plugin destroyed');
+}</div>
+          </div>
+          <div class="event-card glass">
+            <div class="ev-name">onBeforeScroll</div>
+            <div class="ev-jquery">Event: verticalScroll:beforescroll</div>
+            <div class="ev-sig">function(targetIndex, $target, currentIndex)</div>
+            <div class="ev-desc">Fires before scroll begins. Return <code style="background:rgba(0,0,0,0.2);padding:1px 4px;border-radius:3px;">false</code> to cancel the scroll.</div>
+            <div class="ev-example">onBeforeScroll: function(to, $el, from) {
+  if (to === 3) return false; // block
+}</div>
+          </div>
+          <div class="event-card glass">
+            <div class="ev-name">onAfterScroll</div>
+            <div class="ev-jquery">Event: verticalScroll:afterscroll</div>
+            <div class="ev-sig">function(index, $section, oldIndex)</div>
+            <div class="ev-desc">Fires after the scroll animation completes.</div>
+            <div class="ev-example">onAfterScroll: function(index, $s, old) {
+  console.log('Scrolled from', old, 'to', index);
+}</div>
+          </div>
+          <div class="event-card glass">
+            <div class="ev-name">onSectionChange</div>
+            <div class="ev-jquery">Event: verticalScroll:sectionchange</div>
+            <div class="ev-sig">function(newIndex, $section, oldIndex)</div>
+            <div class="ev-desc">Fires when the active section changes, even during native scroll tracking.</div>
+            <div class="ev-example">onSectionChange: function(i, $s, old) {
+  document.title = $s.data('vs-label');
+}</div>
+          </div>
+          <div class="event-card glass">
+            <div class="ev-name">onResize</div>
+            <div class="ev-jquery">Event: verticalScroll:resize</div>
+            <div class="ev-sig">function(isEnabled)</div>
+            <div class="ev-desc">Fires on window resize. Receives whether the plugin is currently enabled (based on breakpoint).</div>
+            <div class="ev-example">onResize: function(isEnabled) {
+  console.log('Enabled:', isEnabled);
+}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 7: Quick Start / Installation
+         ============================================================ -->
+    <section id="sec-install" data-vs-label="Install">
+      <div class="section-inner">
+        <div class="badge">Getting Started</div>
+        <h2>Quick Start</h2>
+        <p class="section-lead">Get up and running in four simple steps. Works with npm, CDN, or manual download.</p>
+        <div class="install-steps">
+          <div class="install-step glass">
+            <div class="step-num">1</div>
+            <h4>Install</h4>
+            <div class="step-code"><span class="hl-cm"># npm</span>
+npm install @vineethnkrishnan/jquery.verticalscroll
+
+<span class="hl-cm"># CDN (jsDelivr)</span>
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/
+  npm/@vineethnkrishnan/jquery.verticalscroll/
+  dist/jquery.verticalScroll.min.css"&gt;
+&lt;script src="https://cdn.jsdelivr.net/
+  npm/@vineethnkrishnan/jquery.verticalscroll/
+  dist/jquery.verticalScroll.min.js"&gt;&lt;/script&gt;</div>
+          </div>
+          <div class="install-step glass">
+            <div class="step-num">2</div>
+            <h4>Include CSS &amp; JS</h4>
+            <div class="step-code">&lt;!-- CSS --&gt;
+&lt;link rel="stylesheet"
+  href="jquery.verticalScroll.css"&gt;
+
+&lt;!-- jQuery (required) --&gt;
+&lt;script src="jquery.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- Plugin --&gt;
+&lt;script src="jquery.verticalScroll.js"&gt;
+&lt;/script&gt;</div>
+          </div>
+          <div class="install-step glass">
+            <div class="step-num">3</div>
+            <h4>Create HTML Sections</h4>
+            <div class="step-code">&lt;div id="page"&gt;
+  &lt;section data-vs-label="Home"&gt;
+    &lt;h1&gt;Welcome&lt;/h1&gt;
+  &lt;/section&gt;
+  &lt;section data-vs-label="About"&gt;
+    &lt;h1&gt;About Us&lt;/h1&gt;
+  &lt;/section&gt;
+  &lt;section data-vs-label="Contact"&gt;
+    &lt;h1&gt;Contact&lt;/h1&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</div>
+          </div>
+          <div class="install-step glass">
+            <div class="step-num">4</div>
+            <h4>Initialize</h4>
+            <div class="step-code"><span class="hl-cm">// Basic</span>
+$(<span class="hl-str">'#page'</span>).<span class="hl-fn">verticalScroll</span>();
+
+<span class="hl-cm">// With options</span>
+$(<span class="hl-str">'#page'</span>).<span class="hl-fn">verticalScroll</span>({
+  <span class="hl-pr">theme</span>: <span class="hl-str">'dark'</span>,
+  <span class="hl-pr">paginationAnimation</span>: <span class="hl-str">'glow'</span>,
+  <span class="hl-pr">loop</span>: <span class="hl-kw">true</span>,
+  <span class="hl-pr">keyboard</span>: <span class="hl-kw">true</span>
+});
+
+<span class="hl-cm">// AMD (RequireJS)</span>
+<span class="hl-kw">define</span>([<span class="hl-str">'jquery'</span>,
+  <span class="hl-str">'jquery.verticalScroll'</span>], <span class="hl-kw">function</span>($) {
+  $(<span class="hl-str">'#page'</span>).<span class="hl-fn">verticalScroll</span>();
+});
+
+<span class="hl-cm">// CommonJS / Webpack</span>
+<span class="hl-kw">var</span> $ = <span class="hl-fn">require</span>(<span class="hl-str">'jquery'</span>);
+<span class="hl-fn">require</span>(<span class="hl-str">'@vineethnkrishnan/jquery.verticalscroll'</span>);
+$(<span class="hl-str">'#page'</span>).<span class="hl-fn">verticalScroll</span>();</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 8: Get Started / CTA
+         ============================================================ -->
+    <section id="sec-cta" data-vs-label="Get Started">
+      <div class="section-inner">
+        <div class="badge">Open Source &mdash; MIT License</div>
+        <h2>Ready to Build?</h2>
+        <p class="section-lead" style="margin-left:auto;margin-right:auto;text-align:center;">
+          Full documentation, live examples, and community support. Start building beautiful full-page scrolling experiences today.
+        </p>
+        <div class="cta-links">
+          <a href="https://jquery-vertical-scroll-docs.vineethnk.in" class="btn btn-primary" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Full Documentation
+          </a>
+          <a href="https://github.com/vineethkrishnan/jquery.verticalScroll.js" class="btn btn-outline" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.npmjs.com/package/@vineethnkrishnan/jquery.verticalscroll" class="btn btn-outline" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M0 7.334v8h6.666v1.332H12v-1.332h12v-8H0zm6.666 6.664H5.334v-4H3.999v4H1.335V8.667h5.331v5.331zm4 0h-2.666V8.667h2.666v5.331zm12 0h-2.666v-4h-1.333v4h-1.334v-4h-1.333v4h-2.666V8.667h9.332v5.331z"/></svg>
+            npm
+          </a>
+        </div>
+        <div class="license-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          MIT License &mdash; Free for personal and commercial use
+        </div>
+        <div class="author-info">
+          Built by <a href="https://github.com/vineethkrishnan" target="_blank">Vineeth Krishnan</a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /#page -->
+
+  <!-- jQuery from CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Plugin JS from local source -->
+  <script src="../src/js/jquery.verticalScroll.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      var $page = $('#page');
+      var currentTheme = 'default';
+      var currentAnim = 'pulse';
+
+      // ============================================================
+      // Initialize the plugin
+      // ============================================================
+      $page.verticalScroll({
+        theme: currentTheme,
+        paginationAnimation: currentAnim,
+        pagination: true,
+        paginationPosition: 'right',
+        paginationOffset: 24,
+        animationDuration: 800,
+        easing: 'swing',
+        keyboard: true,
+        touch: true,
+        mouseWheel: true,
+        loop: true,
+        ariaLabels: true,
+        focusOnSection: true,
+
+        onInit: function(index) {
+          updateCounter(index);
+        },
+
+        onSectionChange: function(index, $section, oldIndex) {
+          updateCounter(index);
+        },
+
+        onAfterScroll: function(index) {
+          updateCounter(index);
+        }
+      });
+
+      // ============================================================
+      // Section counter in header
+      // ============================================================
+      function updateCounter(index) {
+        var total = $page.verticalScroll('getSectionCount');
+        $('#header-counter').html('<strong>' + (index + 1) + '</strong> / ' + total);
+      }
+
+      // ============================================================
+      // Header theme dropdown
+      // ============================================================
+      $('#sel-theme').on('change', function() {
+        var theme = $(this).val();
+        applyTheme(theme);
+      });
+
+      // ============================================================
+      // Header animation dropdown
+      // ============================================================
+      $('#sel-animation').on('change', function() {
+        var anim = $(this).val();
+        applyAnimation(anim);
+      });
+
+      // ============================================================
+      // Playground theme buttons
+      // ============================================================
+      $('#pg-themes').on('click', '.pg-btn', function() {
+        var theme = $(this).data('theme');
+        applyTheme(theme);
+        // Sync dropdown
+        $('#sel-theme').val(theme);
+      });
+
+      // ============================================================
+      // Playground animation buttons
+      // ============================================================
+      $('#pg-animations').on('click', '.pg-btn', function() {
+        var anim = $(this).data('anim');
+        applyAnimation(anim);
+        // Sync dropdown
+        $('#sel-animation').val(anim);
+      });
+
+      // ============================================================
+      // Apply theme
+      // ============================================================
+      function applyTheme(theme) {
+        currentTheme = theme;
+        $page.verticalScroll('setOptions', { theme: theme });
+
+        // Switch page-level theme on body
+        $('body').removeClass('page-theme-default page-theme-dark page-theme-light page-theme-minimal');
+        if (theme !== 'default') {
+          $('body').addClass('page-theme-' + theme);
+        }
+
+        // Update playground UI
+        $('#pg-themes .pg-btn').removeClass('active');
+        $('#pg-themes .pg-btn[data-theme="' + theme + '"]').addClass('active');
+        $('#pg-theme-name').text(theme);
+
+        // Sync header dropdown
+        $('#sel-theme').val(theme);
+
+        updateCodePreview();
+      }
+
+      // ============================================================
+      // Apply animation
+      // ============================================================
+      function applyAnimation(anim) {
+        currentAnim = anim;
+        $page.verticalScroll('setOptions', { paginationAnimation: anim });
+
+        // Update playground UI
+        $('#pg-animations .pg-btn').removeClass('active');
+        $('#pg-animations .pg-btn[data-anim="' + anim + '"]').addClass('active');
+        $('#pg-anim-name').text(anim);
+
+        // Sync header dropdown
+        $('#sel-animation').val(anim);
+
+        updateCodePreview();
+      }
+
+      // ============================================================
+      // Dynamic code preview
+      // ============================================================
+      function updateCodePreview() {
+        var code = '<span class="hl-fn">$</span>(<span class="hl-str">\'#page\'</span>).<span class="hl-fn">verticalScroll</span>({\n' +
+                   '    <span class="hl-pr">theme</span>: <span class="hl-str">\'' + currentTheme + '\'</span>,\n' +
+                   '    <span class="hl-pr">paginationAnimation</span>: <span class="hl-str">\'' + currentAnim + '\'</span>\n' +
+                   '});';
+        $('#pg-code-preview').html(code);
+      }
+    });
+  </script>
+
+</body>
+</html>

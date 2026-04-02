@@ -6,11 +6,27 @@
  * @author Vineeth Krishnan
  * @license MIT - http://opensource.org/licenses/MIT
  *
- * Copyright (c) 2016-2024 Vineeth Krishnan
+ * Copyright (c) 2016-2025 Vineeth Krishnan
  */
 
-;(function($, window, document, undefined) {
+;(function(factory) {
     'use strict';
+
+    if (typeof define === 'function' && define.amd) {
+        // AMD (RequireJS)
+        define(['jquery'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // CommonJS / Node
+        module.exports = factory(require('jquery'));
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+})(function($) {
+    'use strict';
+
+    var window = typeof globalThis !== 'undefined' ? globalThis : typeof self !== 'undefined' ? self : this;
+    var document = window.document;
 
     /**
      * Plugin name and default settings
@@ -57,7 +73,8 @@
         mobileBreakpoint: 768,            // Disable plugin below this width
         
         // Theming
-        theme: 'default',                 // Theme: 'default', 'light', 'dark', 'minimal'
+        theme: 'default',                 // Theme: 'default','light','dark','minimal','neon','git-graph','sound-wave','diamond','arrow','pill','electric','line-connect','chain'
+        paginationAnimation: 'pulse',     // Animation: 'none','pulse','glow','bounce','ripple','scale','fade-ring','rotate','morph','heartbeat','radar','neon-flicker','wave','diamond-spin','electric-zap','slide-in','chain-pop'
         
         // Callbacks
         onInit: null,                     // Called after initialization
@@ -93,7 +110,11 @@
         // Cached elements
         this.$pagination = null;
         this.$sections = null;
-        
+
+        // Store instance on element before init so callbacks can
+        // call back into the plugin (e.g. getSectionCount in onInit)
+        this.$element.data(DATA_KEY, this);
+
         this._init();
     }
 
@@ -155,8 +176,11 @@
                 'scroll-behavior': 'auto' // Disable native smooth scroll
             });
             
-            // Add theme class
+            // Add theme and animation classes
             this.$element.addClass('vs-container vs-theme-' + this.options.theme);
+            if (this.options.paginationAnimation && this.options.paginationAnimation !== 'none') {
+                this.$element.addClass('vs-anim-' + this.options.paginationAnimation);
+            }
         },
 
         /**
@@ -240,11 +264,18 @@
             html += '</nav>';
             
             this.$pagination = $(html);
-            
-            // Position pagination
+
+            // Position pagination — fixed to viewport
             this.$pagination.css(this.options.paginationPosition, this.options.paginationOffset + 'px');
-            
-            this.$element.prepend(this.$pagination);
+
+            // Apply theme and animation classes to pagination
+            // (pagination lives on body, not inside the container)
+            this.$pagination.addClass('vs-theme-' + this.options.theme);
+            if (this.options.paginationAnimation && this.options.paginationAnimation !== 'none') {
+                this.$pagination.addClass('vs-anim-' + this.options.paginationAnimation);
+            }
+
+            $(document.body).append(this.$pagination);
         },
 
         /**
@@ -661,15 +692,15 @@
          */
         next: function() {
             var nextIndex = this.currentIndex + 1;
-            
+
             if (nextIndex >= this.sections.length) {
                 if (this.options.loop) {
-                    nextIndex = 0;
+                    return this._loopTo(0);
                 } else {
                     return $.Deferred().reject('Already at last section').promise();
                 }
             }
-            
+
             return this.scrollToSection(nextIndex);
         },
 
@@ -680,16 +711,61 @@
          */
         prev: function() {
             var prevIndex = this.currentIndex - 1;
-            
+
             if (prevIndex < 0) {
                 if (this.options.loop) {
-                    prevIndex = this.sections.length - 1;
+                    return this._loopTo(this.sections.length - 1);
                 } else {
                     return $.Deferred().reject('Already at first section').promise();
                 }
             }
-            
+
             return this.scrollToSection(prevIndex);
+        },
+
+        /**
+         * Loop transition — fade out, jump, fade in
+         * @private
+         * @param {number} index - Target section index
+         * @returns {jQuery.Deferred}
+         */
+        _loopTo: function(index) {
+            var self = this;
+            var deferred = $.Deferred();
+
+            var shouldScroll = this._trigger('onBeforeScroll', [index, this.$sections.eq(index), this.currentIndex]);
+            if (shouldScroll === false) {
+                return deferred.reject('Scroll cancelled').promise();
+            }
+
+            var oldIndex = this.currentIndex;
+            this.currentIndex = index;
+            this.isScrolling = true;
+
+            this._updateUI(oldIndex, index);
+
+            var duration = Math.min(this.options.animationDuration, 500);
+
+            // Fade out → jump → fade in
+            this.$element.animate({ opacity: 0 }, {
+                duration: duration / 2,
+                easing: this.options.easing,
+                complete: function() {
+                    self.$element.scrollTop(self.positions[index]);
+                    self.$element.animate({ opacity: 1 }, {
+                        duration: duration / 2,
+                        easing: self.options.easing,
+                        complete: function() {
+                            self.isScrolling = false;
+                            self._focusSection(index);
+                            self._trigger('onAfterScroll', [index, self.$sections.eq(index), oldIndex]);
+                            deferred.resolve();
+                        }
+                    });
+                }
+            });
+
+            return deferred.promise();
         },
 
         /**
@@ -706,7 +782,7 @@
                 return $.Deferred().reject('Section not found: ' + id).promise();
             }
             
-            return this.scrollToSection($target.index());
+            return this.scrollToSection(this.$sections.index($target));
         },
 
         /**
@@ -836,14 +912,41 @@
          * @param {Object} options - New options
          */
         setOptions: function(options) {
+            var oldAnimation = this.options.paginationAnimation;
+            var oldTheme = this.options.theme;
+
             $.extend(this.options, options);
-            
+
             // Handle auto-scroll changes
             if (options.hasOwnProperty('autoScroll')) {
                 if (options.autoScroll) {
                     this._startAutoScroll();
                 } else {
                     this._stopAutoScroll();
+                }
+            }
+
+            // Handle animation changes
+            if (options.hasOwnProperty('paginationAnimation')) {
+                this.$element.removeClass('vs-anim-' + oldAnimation);
+                if (this.$pagination) {
+                    this.$pagination.removeClass('vs-anim-' + oldAnimation);
+                }
+                if (options.paginationAnimation && options.paginationAnimation !== 'none') {
+                    this.$element.addClass('vs-anim-' + options.paginationAnimation);
+                    if (this.$pagination) {
+                        this.$pagination.addClass('vs-anim-' + options.paginationAnimation);
+                    }
+                }
+            }
+
+            // Handle theme changes
+            if (options.hasOwnProperty('theme')) {
+                this.$element.removeClass('vs-theme-' + oldTheme);
+                this.$element.addClass('vs-theme-' + options.theme);
+                if (this.$pagination) {
+                    this.$pagination.removeClass('vs-theme-' + oldTheme);
+                    this.$pagination.addClass('vs-theme-' + options.theme);
                 }
             }
         },
@@ -871,7 +974,7 @@
             
             // Remove classes and attributes
             this.$element
-                .removeClass('vs-container vs-initialized vs-disabled vs-theme-' + this.options.theme)
+                .removeClass('vs-container vs-initialized vs-disabled vs-theme-' + this.options.theme + ' vs-anim-' + this.options.paginationAnimation)
                 .removeAttr('role aria-label')
                 .css({
                     'position': '',
@@ -879,9 +982,11 @@
                     'scroll-behavior': ''
                 });
             
-            this.$sections
-                .removeClass('vs-section vs-section-active')
-                .removeAttr('data-vs-index role aria-label tabindex');
+            if (this.$sections) {
+                this.$sections
+                    .removeClass('vs-section vs-section-active')
+                    .removeAttr('data-vs-index role aria-label tabindex');
+            }
             
             // Remove data
             this.$element.removeData(DATA_KEY);
@@ -958,6 +1063,7 @@
             if (!instance) {
                 if (typeof options === 'object' || !options) {
                     instance = new VerticalScroll(this, options);
+                    // Store early so callbacks during _init can call back into the plugin
                     $this.data(DATA_KEY, instance);
                 }
             }
@@ -996,4 +1102,4 @@
      */
     $.fn[PLUGIN_NAME].Constructor = VerticalScroll;
 
-})(jQuery, window, document);
+});

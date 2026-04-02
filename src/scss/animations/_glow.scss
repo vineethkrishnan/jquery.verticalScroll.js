@@ -1,0 +1,14 @@
+// ==========================================================================
+// Animation: Glow
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('glow') {
+  animation: vs-glow 2s ease-in-out infinite;
+}
+
+@keyframes vs-glow {
+  0%, 100% { box-shadow: 0 0 4px 1px var(--vs-dot-active-color, rgba(51, 51, 51, 0.3)); }
+  50%      { box-shadow: 0 0 14px 4px var(--vs-dot-active-color, rgba(51, 51, 51, 0.6)); }
+}

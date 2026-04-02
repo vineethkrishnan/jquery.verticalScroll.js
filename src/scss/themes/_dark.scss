@@ -1,0 +1,23 @@
+// ==========================================================================
+// Theme: Dark
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+$vs-dark-tooltip-bg: vs-theme-value('dark', tooltip-bg);
+
+@include vs-theme('dark', map.get($vs-themes, 'dark'));
+
+.vs-theme-dark .vs-pagination-tooltip::before,
+.vs-pagination.vs-theme-dark .vs-pagination-tooltip::before {
+  border-left-color: $vs-dark-tooltip-bg;
+}
+
+.vs-theme-dark .vs-pagination[style*="left"] .vs-pagination-tooltip::before,
+.vs-pagination.vs-theme-dark[style*="left"] .vs-pagination-tooltip::before {
+  border-right-color: $vs-dark-tooltip-bg;
+  border-left-color: transparent;
+}

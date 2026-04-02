@@ -1,0 +1,28 @@
+// ==========================================================================
+// Accessibility
+// ==========================================================================
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .vs-pagination-dot {
+    border-width: 3px;
+  }
+
+  .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+    background-color: #000000;
+    border-color: #ffffff;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .vs-pagination-dot,
+  .vs-pagination-button,
+  .vs-pagination-tooltip {
+    transition: none;
+  }
+
+  .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+    animation: none;
+  }
+}

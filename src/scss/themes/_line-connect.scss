@@ -1,0 +1,67 @@
+// ==========================================================================
+// Theme: Line Connect — Dots connected by a progress line, active is large
+// ==========================================================================
+
+.vs-theme-line-connect,
+.vs-pagination.vs-theme-line-connect {
+  --vs-dot-color: rgba(255, 255, 255, 0.2);
+  --vs-dot-active-color: #f472b6;
+  --vs-dot-border-color: transparent;
+  --vs-dot-hover-color: rgba(255, 255, 255, 0.4);
+  --vs-dot-size: 8px;
+  --vs-dot-border-width: 0;
+  --vs-dot-spacing: 0;
+  --vs-tooltip-bg: #831843;
+  --vs-tooltip-color: #fce7f3;
+}
+
+// Items have connecting line
+.vs-theme-line-connect .vs-pagination-item,
+.vs-pagination.vs-theme-line-connect .vs-pagination-item {
+  position: relative;
+  padding: 8px 0;
+}
+
+.vs-theme-line-connect .vs-pagination-item::before,
+.vs-pagination.vs-theme-line-connect .vs-pagination-item::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+.vs-theme-line-connect .vs-pagination-item:first-child::before,
+.vs-pagination.vs-theme-line-connect .vs-pagination-item:first-child::before {
+  top: 50%;
+}
+
+.vs-theme-line-connect .vs-pagination-item:last-child::before,
+.vs-pagination.vs-theme-line-connect .vs-pagination-item:last-child::before {
+  bottom: 50%;
+}
+
+// Active dot — large and prominent
+.vs-theme-line-connect .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-line-connect .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background: #f472b6;
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.2);
+  transform: scale(1);
+}
+
+// Hover
+.vs-theme-line-connect .vs-pagination-button:hover .vs-pagination-dot,
+.vs-pagination.vs-theme-line-connect .vs-pagination-button:hover .vs-pagination-dot {
+  background: rgba(244, 114, 182, 0.5);
+}
+
+.vs-theme-line-connect .vs-pagination-button:hover,
+.vs-pagination.vs-theme-line-connect .vs-pagination-button:hover {
+  transform: none;
+}

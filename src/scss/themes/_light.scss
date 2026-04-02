@@ -1,0 +1,23 @@
+// ==========================================================================
+// Theme: Light
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+$vs-light-tooltip-bg: vs-theme-value('light', tooltip-bg);
+
+@include vs-theme('light', map.get($vs-themes, 'light'));
+
+.vs-theme-light .vs-pagination-tooltip::before,
+.vs-pagination.vs-theme-light .vs-pagination-tooltip::before {
+  border-left-color: $vs-light-tooltip-bg;
+}
+
+.vs-theme-light .vs-pagination[style*="left"] .vs-pagination-tooltip::before,
+.vs-pagination.vs-theme-light[style*="left"] .vs-pagination-tooltip::before {
+  border-right-color: $vs-light-tooltip-bg;
+  border-left-color: transparent;
+}

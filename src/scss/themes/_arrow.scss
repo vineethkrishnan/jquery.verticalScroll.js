@@ -1,0 +1,70 @@
+// ==========================================================================
+// Theme: Arrow — Chevron/arrow indicators pointing inward
+// ==========================================================================
+
+.vs-theme-arrow,
+.vs-pagination.vs-theme-arrow {
+  --vs-dot-color: transparent;
+  --vs-dot-active-color: transparent;
+  --vs-dot-border-color: transparent;
+  --vs-dot-hover-color: transparent;
+  --vs-dot-border-width: 0;
+  --vs-tooltip-bg: #333;
+  --vs-tooltip-color: #fff;
+}
+
+// Hide the dot circle, use pseudo for arrow
+.vs-theme-arrow .vs-pagination-dot,
+.vs-pagination.vs-theme-arrow .vs-pagination-dot {
+  width: 0;
+  height: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  position: relative;
+}
+
+// Arrow shape via borders (pointing left, since pagination is on the right)
+.vs-theme-arrow .vs-pagination-dot::after,
+.vs-pagination.vs-theme-arrow .vs-pagination-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-left: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 2.5px solid rgba(255, 255, 255, 0.35);
+  transform: translate(-25%, -50%) rotate(45deg);
+  transition: all 0.3s ease;
+}
+
+// Active arrow — larger, bright
+.vs-theme-arrow .vs-pagination-button.vs-pagination-active .vs-pagination-dot::after,
+.vs-pagination.vs-theme-arrow .vs-pagination-button.vs-pagination-active .vs-pagination-dot::after {
+  width: 11px;
+  height: 11px;
+  border-color: #ffd700;
+  border-width: 3px;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
+}
+
+// Hover arrow
+.vs-theme-arrow .vs-pagination-button:hover .vs-pagination-dot::after,
+.vs-pagination.vs-theme-arrow .vs-pagination-button:hover .vs-pagination-dot::after {
+  border-color: rgba(255, 255, 255, 0.7);
+  width: 10px;
+  height: 10px;
+}
+
+// Button sizing
+.vs-theme-arrow .vs-pagination-button,
+.vs-pagination.vs-theme-arrow .vs-pagination-button {
+  width: 20px;
+  height: 20px;
+}
+
+.vs-theme-arrow .vs-pagination-button:hover,
+.vs-pagination.vs-theme-arrow .vs-pagination-button:hover {
+  transform: none;
+}

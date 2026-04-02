@@ -1,0 +1,8 @@
+# Default owner for everything
+* @vineethkrishnan
+
+# CI/CD and GitHub config
+.github/ @vineethkrishnan
+
+# Plugin source
+src/ @vineethkrishnan

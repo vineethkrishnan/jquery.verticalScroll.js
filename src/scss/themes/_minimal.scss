@@ -1,0 +1,15 @@
+// ==========================================================================
+// Theme: Minimal
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+@include vs-theme('minimal', map.get($vs-themes, 'minimal'));
+
+.vs-theme-minimal .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-minimal .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background-color: vs-theme-value('minimal', active-dot-bg);
+}

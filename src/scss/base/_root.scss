@@ -1,0 +1,25 @@
+// ==========================================================================
+// CSS Custom Properties (Variables)
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts/variables' as *;
+
+:root {
+  // Default Theme Colors
+  --vs-dot-color: #{map.get(map.get($vs-themes, 'default'), dot-color)};
+  --vs-dot-active-color: #{map.get(map.get($vs-themes, 'default'), dot-active-color)};
+  --vs-dot-border-color: #{map.get(map.get($vs-themes, 'default'), dot-border-color)};
+  --vs-dot-hover-color: #{map.get(map.get($vs-themes, 'default'), dot-hover-color)};
+  --vs-tooltip-bg: #{map.get(map.get($vs-themes, 'default'), tooltip-bg)};
+  --vs-tooltip-color: #{map.get(map.get($vs-themes, 'default'), tooltip-color)};
+
+  // Sizing
+  --vs-dot-size: #{$vs-dot-size};
+  --vs-dot-spacing: #{$vs-dot-spacing};
+  --vs-dot-border-width: #{$vs-dot-border-width};
+
+  // Animation
+  --vs-transition-duration: #{$vs-transition-duration};
+  --vs-transition-easing: #{$vs-transition-easing};
+}

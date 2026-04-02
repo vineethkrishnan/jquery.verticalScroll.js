@@ -1,0 +1,42 @@
+// ==========================================================================
+// Theme: Diamond — Rotated squares that look like diamond markers
+// ==========================================================================
+
+.vs-theme-diamond,
+.vs-pagination.vs-theme-diamond {
+  --vs-dot-color: transparent;
+  --vs-dot-active-color: #ff6b6b;
+  --vs-dot-border-color: #ff6b6b;
+  --vs-dot-hover-color: rgba(255, 107, 107, 0.3);
+  --vs-dot-size: 10px;
+  --vs-dot-border-width: 2px;
+  --vs-tooltip-bg: #2d2d2d;
+  --vs-tooltip-color: #ff6b6b;
+}
+
+// Rotate dots into diamonds
+.vs-theme-diamond .vs-pagination-dot,
+.vs-pagination.vs-theme-diamond .vs-pagination-dot {
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+// Active diamond — filled
+.vs-theme-diamond .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-diamond .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background: #ff6b6b;
+  transform: rotate(45deg) scale(1.2);
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+}
+
+// Hover diamond
+.vs-theme-diamond .vs-pagination-button:hover .vs-pagination-dot,
+.vs-pagination.vs-theme-diamond .vs-pagination-button:hover .vs-pagination-dot {
+  transform: rotate(45deg) scale(1.15);
+}
+
+// Override hover on button (prevent double transform)
+.vs-theme-diamond .vs-pagination-button:hover,
+.vs-pagination.vs-theme-diamond .vs-pagination-button:hover {
+  transform: none;
+}

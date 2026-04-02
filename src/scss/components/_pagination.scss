@@ -1,0 +1,30 @@
+// ==========================================================================
+// Pagination Navigation
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+
+.vs-pagination {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: $vs-pagination-z-index;
+  padding: $vs-pagination-padding;
+}
+
+.vs-pagination-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--vs-dot-spacing);
+}
+
+.vs-pagination-item {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

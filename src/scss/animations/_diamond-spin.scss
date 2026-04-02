@@ -1,0 +1,15 @@
+// ==========================================================================
+// Animation: Diamond Spin — Matches diamond theme, rotating diamond
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('diamond-spin') {
+  animation: vs-diamond-spin 2s ease-in-out infinite;
+}
+
+@keyframes vs-diamond-spin {
+  0%   { transform: rotate(45deg) scale(1.2); }
+  50%  { transform: rotate(225deg) scale(1.4); }
+  100% { transform: rotate(405deg) scale(1.2); }
+}

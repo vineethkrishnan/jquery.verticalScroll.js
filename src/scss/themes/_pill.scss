@@ -1,0 +1,44 @@
+// ==========================================================================
+// Theme: Pill — Horizontal capsule shapes, active one extends
+// ==========================================================================
+
+.vs-theme-pill,
+.vs-pagination.vs-theme-pill {
+  --vs-dot-color: rgba(255, 255, 255, 0.2);
+  --vs-dot-active-color: #a855f7;
+  --vs-dot-border-color: transparent;
+  --vs-dot-hover-color: rgba(255, 255, 255, 0.35);
+  --vs-dot-border-width: 0;
+  --vs-tooltip-bg: #1e1b4b;
+  --vs-tooltip-color: #a855f7;
+}
+
+// Transform dots into small pills
+.vs-theme-pill .vs-pagination-dot,
+.vs-pagination.vs-theme-pill .vs-pagination-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 100px;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+// Active pill — expands vertically
+.vs-theme-pill .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-pill .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  width: 6px;
+  height: 24px;
+  background: #a855f7;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+  transform: scale(1);
+}
+
+// Hover pill
+.vs-theme-pill .vs-pagination-button:hover .vs-pagination-dot,
+.vs-pagination.vs-theme-pill .vs-pagination-button:hover .vs-pagination-dot {
+  height: 14px;
+}
+
+.vs-theme-pill .vs-pagination-button:hover,
+.vs-pagination.vs-theme-pill .vs-pagination-button:hover {
+  transform: none;
+}

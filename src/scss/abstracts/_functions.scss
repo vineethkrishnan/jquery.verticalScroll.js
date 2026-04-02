@@ -1,0 +1,20 @@
+// ==========================================================================
+// Functions
+// ==========================================================================
+
+@use 'sass:map';
+@use 'variables' as *;
+
+/// Retrieve a value from a theme config map
+/// @param {String} $theme-name - Theme key in $vs-themes
+/// @param {String} $key - Property key within the theme
+/// @return {*} The value for the given key
+@function vs-theme-value($theme-name, $key) {
+  $theme: map.get($vs-themes, $theme-name);
+
+  @if not $theme {
+    @error 'Theme "#{$theme-name}" not found in $vs-themes.';
+  }
+
+  @return map.get($theme, $key);
+}

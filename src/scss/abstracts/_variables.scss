@@ -1,0 +1,72 @@
+// ==========================================================================
+// Variables
+// ==========================================================================
+
+// Namespace prefix
+$vs-prefix: 'vs' !default;
+
+// Sizing
+$vs-dot-size: 12px !default;
+$vs-dot-spacing: 12px !default;
+$vs-dot-border-width: 2px !default;
+
+// Transition
+$vs-transition-duration: 0.3s !default;
+$vs-transition-easing: cubic-bezier(0.4, 0, 0.2, 1) !default;
+
+// Pagination
+$vs-pagination-z-index: 100 !default;
+$vs-pagination-padding: 10px !default;
+
+// Tooltip
+$vs-tooltip-font-size: 12px !default;
+$vs-tooltip-padding: 6px 12px !default;
+$vs-tooltip-border-radius: 4px !default;
+$vs-tooltip-arrow-size: 6px !default;
+$vs-tooltip-offset: 15px !default;
+$vs-tooltip-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif !default;
+
+// Responsive
+$vs-mobile-breakpoint: 768px !default;
+
+// Theme map
+$vs-themes: (
+  'default': (
+    dot-color: #333333,
+    dot-active-color: #ffffff,
+    dot-border-color: #333333,
+    dot-hover-color: #666666,
+    tooltip-bg: #333333,
+    tooltip-color: #ffffff,
+  ),
+  'light': (
+    dot-color: #e0e0e0,
+    dot-active-color: #333333,
+    dot-border-color: #999999,
+    dot-hover-color: #cccccc,
+    tooltip-bg: #f5f5f5,
+    tooltip-color: #333333,
+  ),
+  'dark': (
+    dot-color: #555555,
+    dot-active-color: #00bcd4,
+    dot-border-color: #777777,
+    dot-hover-color: #888888,
+    tooltip-bg: #1a1a1a,
+    tooltip-color: #ffffff,
+  ),
+  'minimal': (
+    dot-color: transparent,
+    dot-active-color: transparent,
+    dot-border-color: #333333,
+    dot-hover-color: rgba(51, 51, 51, 0.3),
+    dot-size: 8px,
+    dot-border-width: 1px,
+    tooltip-bg: #333333,
+    tooltip-color: #ffffff,
+    active-dot-bg: #333333,
+  ),
+) !default;
+
+// Animation list
+$vs-animations: (pulse, glow, bounce, ripple, scale, fade-ring, rotate, morph, heartbeat, radar) !default;

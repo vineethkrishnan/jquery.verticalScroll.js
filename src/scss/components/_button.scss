@@ -1,0 +1,32 @@
+// ==========================================================================
+// Pagination Button
+// ==========================================================================
+
+.vs-pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--vs-dot-size) + var(--vs-dot-border-width) * 2);
+  height: calc(var(--vs-dot-size) + var(--vs-dot-border-width) * 2);
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--vs-transition-duration) var(--vs-transition-easing);
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--vs-dot-border-color);
+    outline-offset: 4px;
+    border-radius: 50%;
+  }
+}

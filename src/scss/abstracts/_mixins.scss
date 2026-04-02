@@ -1,0 +1,64 @@
+// ==========================================================================
+// Mixins
+// ==========================================================================
+
+@use 'sass:map';
+@use 'variables' as *;
+
+/// Apply transition with plugin defaults
+/// @param {ArgList} $properties - CSS properties to transition
+@mixin vs-transition($properties...) {
+  transition-property: $properties;
+  transition-duration: $vs-transition-duration;
+  transition-timing-function: $vs-transition-easing;
+}
+
+/// Pseudo-element overlay (used in animation pseudo-elements)
+@mixin vs-pseudo-overlay {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+}
+
+/// Responsive breakpoint wrapper
+/// @param {Length} $breakpoint - Max-width breakpoint value
+@mixin vs-respond-to($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+/// Active dot selector shorthand
+/// Matches both when .vs-anim-X is on an ancestor (container) or on the
+/// pagination element itself (when pagination is appended to body).
+/// @param {String} $name - Animation name
+@mixin vs-active-dot($name) {
+  .vs-anim-#{$name} .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+  .vs-pagination.vs-anim-#{$name} .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+    @content;
+  }
+}
+
+/// Generate theme CSS custom properties from theme map
+/// @param {String} $name - Theme name
+/// @param {Map} $config - Theme configuration map
+@mixin vs-theme($name, $config) {
+  .vs-theme-#{$name} {
+    --vs-dot-color: #{map.get($config, dot-color)};
+    --vs-dot-active-color: #{map.get($config, dot-active-color)};
+    --vs-dot-border-color: #{map.get($config, dot-border-color)};
+    --vs-dot-hover-color: #{map.get($config, dot-hover-color)};
+    --vs-tooltip-bg: #{map.get($config, tooltip-bg)};
+    --vs-tooltip-color: #{map.get($config, tooltip-color)};
+
+    @if map.has-key($config, dot-size) {
+      --vs-dot-size: #{map.get($config, dot-size)};
+    }
+
+    @if map.has-key($config, dot-border-width) {
+      --vs-dot-border-width: #{map.get($config, dot-border-width)};
+    }
+
+    @content;
+  }
+}

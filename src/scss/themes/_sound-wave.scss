@@ -1,0 +1,47 @@
+// ==========================================================================
+// Theme: Sound Wave — Horizontal bars like an audio equalizer
+// ==========================================================================
+
+.vs-theme-sound-wave,
+.vs-pagination.vs-theme-sound-wave {
+  --vs-dot-color: rgba(255, 255, 255, 0.25);
+  --vs-dot-active-color: #00e676;
+  --vs-dot-border-color: transparent;
+  --vs-dot-hover-color: rgba(255, 255, 255, 0.5);
+  --vs-dot-border-width: 0;
+  --vs-tooltip-bg: #1a1a1a;
+  --vs-tooltip-color: #00e676;
+}
+
+// Transform dots into horizontal bars
+.vs-theme-sound-wave .vs-pagination-dot,
+.vs-pagination.vs-theme-sound-wave .vs-pagination-dot {
+  width: 20px;
+  height: 4px;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Active bar — wider and taller
+.vs-theme-sound-wave .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-sound-wave .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  width: 28px;
+  height: 6px;
+  background: #00e676;
+  box-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
+  transform: scale(1);
+}
+
+// Hover bar
+.vs-theme-sound-wave .vs-pagination-button:hover .vs-pagination-dot,
+.vs-pagination.vs-theme-sound-wave .vs-pagination-button:hover .vs-pagination-dot {
+  width: 24px;
+  height: 5px;
+}
+
+// Button sizing for bars
+.vs-theme-sound-wave .vs-pagination-button,
+.vs-pagination.vs-theme-sound-wave .vs-pagination-button {
+  width: 32px;
+  height: 14px;
+}

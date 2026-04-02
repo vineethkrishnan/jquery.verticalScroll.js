@@ -30,3 +30,9 @@ yarn-error.log*
 # Package lock files (optional - some projects prefer to commit these)
 # package-lock.json
 # yarn.lock
+
+# Test artifacts
+test-results/
+playwright-report/
+tests/visual/snapshots/
+coverage/

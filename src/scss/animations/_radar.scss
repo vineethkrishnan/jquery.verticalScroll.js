@@ -1,0 +1,27 @@
+// ==========================================================================
+// Animation: Radar
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('radar') {
+  position: relative;
+  overflow: visible;
+
+  &::after,
+  &::before {
+    @include vs-pseudo-overlay;
+    inset: -3px;
+    border: 1.5px solid var(--vs-dot-active-color, #333);
+    animation: vs-radar 2.4s ease-out infinite;
+  }
+
+  &::before {
+    animation-delay: 1.2s;
+  }
+}
+
+@keyframes vs-radar {
+  0%   { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(2.8); opacity: 0; }
+}

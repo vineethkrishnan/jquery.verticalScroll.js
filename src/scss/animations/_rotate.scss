@@ -1,0 +1,15 @@
+// ==========================================================================
+// Animation: Rotate
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('rotate') {
+  border-style: dashed;
+  animation: vs-rotate 3s linear infinite;
+}
+
+@keyframes vs-rotate {
+  0%   { transform: scale(1.1) rotate(0deg); }
+  100% { transform: scale(1.1) rotate(360deg); }
+}

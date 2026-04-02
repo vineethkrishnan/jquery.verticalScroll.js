@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vertical Scroll Plugin - Themes</title>
+  <link rel="stylesheet" href="/src/css/jquery.verticalScroll.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f0f0;
+    }
+
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 16px;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .theme-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-container section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .theme-container section h3 {
+      font-size: 1rem;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      margin: 0;
+    }
+
+    .theme-container section p {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 4px 0 0;
+    }
+
+    .theme-label {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 200;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Section colors for each theme container */
+    .theme-container .sec-1 { background-color: #e74c3c; }
+    .theme-container .sec-2 { background-color: #3498db; }
+    .theme-container .sec-3 { background-color: #2ecc71; }
+  </style>
+</head>
+<body>
+  <div class="themes-grid">
+    <!-- Default theme -->
+    <div class="theme-wrapper" style="position: relative;">
+      <span class="theme-label">Default</span>
+      <div id="theme-default" class="theme-container">
+        <section class="sec-1" data-vs-label="Home"><h3>Section 1</h3><p>Home</p></section>
+        <section class="sec-2" data-vs-label="About"><h3>Section 2</h3><p>About</p></section>
+        <section class="sec-3" data-vs-label="Contact"><h3>Section 3</h3><p>Contact</p></section>
+      </div>
+    </div>
+
+    <!-- Light theme -->
+    <div class="theme-wrapper" style="position: relative;">
+      <span class="theme-label">Light</span>
+      <div id="theme-light" class="theme-container">
+        <section class="sec-1" data-vs-label="Home"><h3>Section 1</h3><p>Home</p></section>
+        <section class="sec-2" data-vs-label="About"><h3>Section 2</h3><p>About</p></section>
+        <section class="sec-3" data-vs-label="Contact"><h3>Section 3</h3><p>Contact</p></section>
+      </div>
+    </div>
+
+    <!-- Dark theme -->
+    <div class="theme-wrapper" style="position: relative;">
+      <span class="theme-label">Dark</span>
+      <div id="theme-dark" class="theme-container">
+        <section class="sec-1" data-vs-label="Home"><h3>Section 1</h3><p>Home</p></section>
+        <section class="sec-2" data-vs-label="About"><h3>Section 2</h3><p>About</p></section>
+        <section class="sec-3" data-vs-label="Contact"><h3>Section 3</h3><p>Contact</p></section>
+      </div>
+    </div>
+
+    <!-- Minimal theme -->
+    <div class="theme-wrapper" style="position: relative;">
+      <span class="theme-label">Minimal</span>
+      <div id="theme-minimal" class="theme-container">
+        <section class="sec-1" data-vs-label="Home"><h3>Section 1</h3><p>Home</p></section>
+        <section class="sec-2" data-vs-label="About"><h3>Section 2</h3><p>About</p></section>
+        <section class="sec-3" data-vs-label="Contact"><h3>Section 3</h3><p>Contact</p></section>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <script src="/src/js/jquery.verticalScroll.js"></script>
+  <script>
+    $(function() {
+      $('#theme-default').verticalScroll({ theme: 'default', animationDuration: 300, keyboard: false });
+      $('#theme-light').verticalScroll({ theme: 'light', animationDuration: 300, keyboard: false });
+      $('#theme-dark').verticalScroll({ theme: 'dark', animationDuration: 300, keyboard: false });
+      $('#theme-minimal').verticalScroll({ theme: 'minimal', animationDuration: 300, keyboard: false });
+    });
+  </script>
+</body>
+</html>

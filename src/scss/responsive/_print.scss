@@ -1,0 +1,19 @@
+// ==========================================================================
+// Print Styles
+// ==========================================================================
+
+@media print {
+  .vs-pagination {
+    display: none !important;
+  }
+
+  .vs-container {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .vs-section {
+    min-height: auto !important;
+    page-break-inside: avoid;
+  }
+}

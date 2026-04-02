@@ -1,0 +1,16 @@
+// ==========================================================================
+// Animation: Wave — Matches sound-wave theme, bar expands and contracts
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('wave') {
+  animation: vs-wave 1.5s ease-in-out infinite;
+}
+
+@keyframes vs-wave {
+  0%, 100% { height: 6px; width: 28px; }
+  25%      { height: 10px; width: 24px; }
+  50%      { height: 4px; width: 32px; }
+  75%      { height: 8px; width: 26px; }
+}

@@ -1,0 +1,23 @@
+// ==========================================================================
+// Pagination Dot
+// ==========================================================================
+
+.vs-pagination-dot {
+  display: block;
+  width: var(--vs-dot-size);
+  height: var(--vs-dot-size);
+  border-radius: 50%;
+  background-color: var(--vs-dot-color);
+  border: var(--vs-dot-border-width) solid var(--vs-dot-border-color);
+  transition: all var(--vs-transition-duration) var(--vs-transition-easing);
+}
+
+.vs-pagination-button:hover .vs-pagination-dot {
+  background-color: var(--vs-dot-hover-color);
+}
+
+.vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background-color: var(--vs-dot-active-color);
+  transform: scale(1.1);
+  animation: none;
+}

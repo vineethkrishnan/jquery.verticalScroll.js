@@ -1,0 +1,16 @@
+// ==========================================================================
+// Responsive / Mobile
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+@include vs-respond-to($vs-mobile-breakpoint) {
+  .vs-pagination {
+    display: none;
+  }
+
+  .vs-container.vs-disabled .vs-pagination {
+    display: none;
+  }
+}

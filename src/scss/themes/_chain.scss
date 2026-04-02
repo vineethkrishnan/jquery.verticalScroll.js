@@ -1,0 +1,147 @@
+// ==========================================================================
+// Theme: Chain — Realistic bicycle chain with interlocking links
+//
+// Each link is an oval ring. Odd links are vertical (tall), even links are
+// horizontal (wide) and sit THROUGH the odd links, creating the classic
+// alternating interlock pattern of a real roller chain.
+// ==========================================================================
+
+$_chain-link-color: #8a8a8a;
+$_chain-link-active: #d4a017;
+$_chain-link-shine: #b8b8b8;
+$_chain-pin: #666;
+
+.vs-theme-chain,
+.vs-pagination.vs-theme-chain {
+  --vs-dot-color: transparent;
+  --vs-dot-active-color: #{$_chain-link-active};
+  --vs-dot-border-color: #{$_chain-link-color};
+  --vs-dot-hover-color: transparent;
+  --vs-dot-size: 10px;
+  --vs-dot-border-width: 3px;
+  --vs-dot-spacing: 0;
+  --vs-tooltip-bg: #292524;
+  --vs-tooltip-color: #{$_chain-link-active};
+}
+
+// Remove default button hover scale
+.vs-theme-chain .vs-pagination-button:hover,
+.vs-pagination.vs-theme-chain .vs-pagination-button:hover {
+  transform: none;
+}
+
+// ── Link items overlap to interlock ──────────────────────────────────────
+
+.vs-theme-chain .vs-pagination-item,
+.vs-pagination.vs-theme-chain .vs-pagination-item {
+  padding: 0;
+  margin: -4px 0;
+  position: relative;
+}
+
+// Alternate z-index so links weave through each other
+.vs-theme-chain .vs-pagination-item:nth-child(odd),
+.vs-pagination.vs-theme-chain .vs-pagination-item:nth-child(odd) {
+  z-index: 2;
+}
+
+.vs-theme-chain .vs-pagination-item:nth-child(even),
+.vs-pagination.vs-theme-chain .vs-pagination-item:nth-child(even) {
+  z-index: 1;
+}
+
+// ── Dot = the chain link ring ────────────────────────────────────────────
+
+.vs-theme-chain .vs-pagination-dot,
+.vs-pagination.vs-theme-chain .vs-pagination-dot {
+  position: relative;
+  border-radius: 100px;
+  overflow: visible;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  // Metallic gradient border effect
+  background:
+    linear-gradient(160deg, $_chain-link-shine, $_chain-link-color 40%, #555 100%);
+  -webkit-mask: none;
+  mask: none;
+  border: none;
+}
+
+// Inner hole of the link (makes it a ring)
+.vs-theme-chain .vs-pagination-dot::before,
+.vs-pagination.vs-theme-chain .vs-pagination-dot::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 100px;
+  background: inherit;
+  // Punch out the center by matching parent bg
+  // We use a solid dark color to simulate the hole
+  background: #1c1917;
+  z-index: 1;
+}
+
+// Odd links = vertical (tall ovals)
+.vs-theme-chain .vs-pagination-item:nth-child(odd) .vs-pagination-dot,
+.vs-pagination.vs-theme-chain .vs-pagination-item:nth-child(odd) .vs-pagination-dot {
+  width: 12px;
+  height: 22px;
+}
+
+// Even links = horizontal (wide ovals), rotated 90deg to interlock
+.vs-theme-chain .vs-pagination-item:nth-child(even) .vs-pagination-dot,
+.vs-pagination.vs-theme-chain .vs-pagination-item:nth-child(even) .vs-pagination-dot {
+  width: 16px;
+  height: 12px;
+}
+
+// Center pin on even links (the roller pin between plates)
+.vs-theme-chain .vs-pagination-item:nth-child(even) .vs-pagination-dot::after,
+.vs-pagination.vs-theme-chain .vs-pagination-item:nth-child(even) .vs-pagination-dot::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, $_chain-link-shine 30%, $_chain-pin 100%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+// ── Active link — gold / brass highlight ─────────────────────────────────
+
+.vs-theme-chain .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-chain .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background: linear-gradient(160deg, #fcd34d, $_chain-link-active 40%, #b8860b 100%);
+  box-shadow:
+    0 0 6px rgba(212, 160, 23, 0.5),
+    0 0 14px rgba(212, 160, 23, 0.2);
+  transform: scale(1.1);
+}
+
+// Active inner hole slightly brighter
+.vs-theme-chain .vs-pagination-button.vs-pagination-active .vs-pagination-dot::before,
+.vs-pagination.vs-theme-chain .vs-pagination-button.vs-pagination-active .vs-pagination-dot::before {
+  background: #292524;
+}
+
+// Active pin turns gold
+.vs-theme-chain .vs-pagination-button.vs-pagination-active .vs-pagination-dot::after,
+.vs-pagination.vs-theme-chain .vs-pagination-button.vs-pagination-active .vs-pagination-dot::after {
+  background: radial-gradient(circle, #fef08a 30%, $_chain-link-active 100%);
+}
+
+// Active link z-index override
+.vs-theme-chain .vs-pagination-item:has(.vs-pagination-active),
+.vs-pagination.vs-theme-chain .vs-pagination-item:has(.vs-pagination-active) {
+  z-index: 3;
+}
+
+// ── Hover ────────────────────────────────────────────────────────────────
+
+.vs-theme-chain .vs-pagination-button:hover .vs-pagination-dot,
+.vs-pagination.vs-theme-chain .vs-pagination-button:hover .vs-pagination-dot {
+  background: linear-gradient(160deg, #d4d4d4, #aaa 40%, #777 100%);
+  box-shadow: 0 0 6px rgba(200, 200, 200, 0.2);
+}

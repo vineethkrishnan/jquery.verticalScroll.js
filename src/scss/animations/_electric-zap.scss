@@ -1,0 +1,36 @@
+// ==========================================================================
+// Animation: Electric Zap — Matches electric theme, crackling flash
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+@include vs-active-dot('electric-zap') {
+  animation: vs-electric-zap 2s ease infinite;
+}
+
+@keyframes vs-electric-zap {
+  0%, 100% {
+    box-shadow: 0 0 4px var(--vs-dot-active-color, #f0e68c),
+                0 0 12px rgba(240, 230, 140, 0.5);
+    transform: scale(1.2);
+  }
+  10% {
+    box-shadow: 0 0 8px var(--vs-dot-active-color, #f0e68c),
+                0 0 30px rgba(240, 230, 140, 0.8);
+    transform: scale(1.5);
+  }
+  12% {
+    box-shadow: 0 0 2px var(--vs-dot-active-color, #f0e68c);
+    transform: scale(1.1);
+  }
+  14% {
+    box-shadow: 0 0 6px var(--vs-dot-active-color, #f0e68c),
+                0 0 20px rgba(240, 230, 140, 0.6);
+    transform: scale(1.35);
+  }
+  20% {
+    box-shadow: 0 0 4px var(--vs-dot-active-color, #f0e68c),
+                0 0 12px rgba(240, 230, 140, 0.5);
+    transform: scale(1.2);
+  }
+}

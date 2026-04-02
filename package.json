@@ -15,7 +15,16 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "grunt",
+    "build": "grunt && postcss src/css/jquery.verticalScroll.css --replace --no-map",
+    "build:scss": "npx sass src/scss/main.scss src/css/jquery.verticalScroll.css --source-map",
+    "build:grunt": "grunt",
+    "test": "jest",
+    "test:verbose": "jest --verbose",
+    "test:e2e": "npx playwright test --project=chromium --project=firefox --project=webkit",
+    "test:visual": "npx playwright test --project=visual",
+    "test:visual:update": "npx playwright test --project=visual --update-snapshots",
+    "test:playwright": "npx playwright test",
+    "docs:serve": "npx docsify-cli serve docs --port 3000",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -51,9 +60,18 @@
     "jquery": ">=1.9.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "autoprefixer": "^10.4.27",
     "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^5.0.0",
-    "grunt-contrib-uglify": "^5.2.2"
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-sass": "^4.1.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "jquery": "^4.0.0",
+    "postcss": "^8.5.8",
+    "postcss-cli": "^11.0.1",
+    "sass": "^1.98.0"
   },
   "engines": {
     "node": ">=14.0.0"

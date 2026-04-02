@@ -1,0 +1,44 @@
+// ==========================================================================
+// Animation: Chain Pop — Active link gets tensioned and glows gold,
+// like a chain link being pulled taut under load
+// ==========================================================================
+
+@use '../abstracts/mixins' as *;
+
+// The active dot animation
+@include vs-active-dot('chain-pop') {
+  animation: vs-chain-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes vs-chain-pop {
+  0% {
+    transform: scale(0.7);
+    box-shadow: 0 0 0 0 rgba(212, 160, 23, 0);
+    filter: brightness(0.6);
+  }
+  30% {
+    transform: scale(1.25);
+    box-shadow:
+      0 0 10px rgba(212, 160, 23, 0.6),
+      0 0 25px rgba(212, 160, 23, 0.3);
+    filter: brightness(1.3);
+  }
+  50% {
+    transform: scale(1.0);
+    filter: brightness(1.0);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow:
+      0 0 8px rgba(212, 160, 23, 0.5),
+      0 0 18px rgba(212, 160, 23, 0.2);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: scale(1.1);
+    box-shadow:
+      0 0 6px rgba(212, 160, 23, 0.5),
+      0 0 14px rgba(212, 160, 23, 0.2);
+    filter: brightness(1.0);
+  }
+}

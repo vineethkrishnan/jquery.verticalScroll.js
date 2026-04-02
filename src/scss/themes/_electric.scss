@@ -1,0 +1,62 @@
+// ==========================================================================
+// Theme: Electric — Crackling energy dots with double ring
+// ==========================================================================
+
+.vs-theme-electric,
+.vs-pagination.vs-theme-electric {
+  --vs-dot-color: transparent;
+  --vs-dot-active-color: #f0e68c;
+  --vs-dot-border-color: rgba(240, 230, 140, 0.4);
+  --vs-dot-hover-color: rgba(240, 230, 140, 0.2);
+  --vs-dot-size: 8px;
+  --vs-dot-border-width: 2px;
+  --vs-tooltip-bg: #1a1a0a;
+  --vs-tooltip-color: #f0e68c;
+}
+
+// Outer ring via pseudo-element
+.vs-theme-electric .vs-pagination-dot,
+.vs-pagination.vs-theme-electric .vs-pagination-dot {
+  position: relative;
+  overflow: visible;
+}
+
+.vs-theme-electric .vs-pagination-dot::after,
+.vs-pagination.vs-theme-electric .vs-pagination-dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px dashed rgba(240, 230, 140, 0.25);
+  transition: all 0.3s ease;
+}
+
+// Active — electric glow
+.vs-theme-electric .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-electric .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background: #f0e68c;
+  border-color: #f0e68c;
+  box-shadow:
+    0 0 4px #f0e68c,
+    0 0 12px rgba(240, 230, 140, 0.5),
+    0 0 24px rgba(240, 230, 140, 0.2);
+  transform: scale(1.2);
+}
+
+.vs-theme-electric .vs-pagination-button.vs-pagination-active .vs-pagination-dot::after,
+.vs-pagination.vs-theme-electric .vs-pagination-button.vs-pagination-active .vs-pagination-dot::after {
+  border-color: rgba(240, 230, 140, 0.6);
+  border-style: solid;
+  animation: vs-electric-spin 2s linear infinite;
+}
+
+@keyframes vs-electric-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Hover
+.vs-theme-electric .vs-pagination-button:hover .vs-pagination-dot::after,
+.vs-pagination.vs-theme-electric .vs-pagination-button:hover .vs-pagination-dot::after {
+  border-color: rgba(240, 230, 140, 0.5);
+}

@@ -33,14 +33,24 @@ npm install @vineethnkrishnan/jquery.verticalscroll
 yarn add @vineethnkrishnan/jquery.verticalscroll
 ```
 
-### CDN
+### CDN (jsDelivr)
 
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://unpkg.com/@vineethnkrishnan/jquery.verticalscroll/dist/css/jquery.verticalscroll.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vineethnkrishnan/jquery.verticalscroll@2/dist/css/jquery.verticalscroll.min.css">
 
 <!-- JavaScript (after jQuery) -->
-<script src="https://unpkg.com/@vineethnkrishnan/jquery.verticalscroll/dist/js/jquery.verticalscroll.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vineethnkrishnan/jquery.verticalscroll@2/dist/js/jquery.verticalscroll.min.js"></script>
+```
+
+### CDN (unpkg)
+
+```html
+<!-- CSS -->
+<link rel="stylesheet" href="https://unpkg.com/@vineethnkrishnan/jquery.verticalscroll@2/dist/css/jquery.verticalscroll.min.css">
+
+<!-- JavaScript (after jQuery) -->
+<script src="https://unpkg.com/@vineethnkrishnan/jquery.verticalscroll@2/dist/js/jquery.verticalscroll.min.js"></script>
 ```
 
 ### Manual Download

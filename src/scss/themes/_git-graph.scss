@@ -1,0 +1,61 @@
+// ==========================================================================
+// Theme: Git Graph — Connected dots with a vertical line like git log
+// ==========================================================================
+
+.vs-theme-git-graph,
+.vs-pagination.vs-theme-git-graph {
+  --vs-dot-color: #8b949e;
+  --vs-dot-active-color: #58a6ff;
+  --vs-dot-border-color: #8b949e;
+  --vs-dot-hover-color: #c9d1d9;
+  --vs-dot-size: 12px;
+  --vs-dot-border-width: 2px;
+  --vs-dot-spacing: 0;
+  --vs-tooltip-bg: #161b22;
+  --vs-tooltip-color: #c9d1d9;
+}
+
+// Vertical connecting line between dots
+.vs-theme-git-graph .vs-pagination-item,
+.vs-pagination.vs-theme-git-graph .vs-pagination-item {
+  position: relative;
+  padding: 10px 0;
+}
+
+.vs-theme-git-graph .vs-pagination-item::before,
+.vs-pagination.vs-theme-git-graph .vs-pagination-item::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #30363d;
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+// Hide line above first and below last
+.vs-theme-git-graph .vs-pagination-item:first-child::before,
+.vs-pagination.vs-theme-git-graph .vs-pagination-item:first-child::before {
+  top: 50%;
+}
+
+.vs-theme-git-graph .vs-pagination-item:last-child::before,
+.vs-pagination.vs-theme-git-graph .vs-pagination-item:last-child::before {
+  bottom: 50%;
+}
+
+// Active dot — branch highlight
+.vs-theme-git-graph .vs-pagination-button.vs-pagination-active .vs-pagination-dot,
+.vs-pagination.vs-theme-git-graph .vs-pagination-button.vs-pagination-active .vs-pagination-dot {
+  background: #58a6ff;
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+  transform: scale(1.3);
+}
+
+// Visited dots (before active) — green like merged commits
+.vs-theme-git-graph .vs-pagination-button.vs-pagination-active ~ .vs-pagination-item .vs-pagination-dot {
+  // Items after active stay grey
+}

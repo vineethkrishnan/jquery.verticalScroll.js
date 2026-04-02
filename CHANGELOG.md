@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.0.0...v2.1.0) (2026-04-02)
+
+
+### Features
+
+* add themes, animations, tests, docs, SCSS architecture, and CI/CD ([#5](https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues/5)) ([9266b09](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/9266b09ad5b8dffc46d8ec026dcb753edef2e684))
+
+
+### Bug Fixes
+
+* update Gruntfile to use base name for dist file paths ([d786117](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/d786117f4f6a23bd60b359fff4d3e38aaabac64b))
+
 ## [Unreleased]
 
 ### Changed

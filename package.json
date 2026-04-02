@@ -16,7 +16,11 @@
   ],
   "scripts": {
     "build": "grunt",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "npx playwright test",
+    "test:e2e": "npx playwright test tests/e2e/verticalScroll.spec.js",
+    "test:visual": "npx playwright test tests/e2e/visualRegression.spec.js",
+    "test:update-snapshots": "npx playwright test --update-snapshots"
   },
   "repository": {
     "type": "git",
@@ -51,9 +55,11 @@
     "jquery": ">=1.9.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^5.0.0",
-    "grunt-contrib-uglify": "^5.2.2"
+    "grunt-contrib-uglify": "^5.2.2",
+    "jquery": "^3.7.1"
   },
   "engines": {
     "node": ">=14.0.0"

@@ -67,7 +67,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy docs --project-name=jquery-vertical-scroll-docs --commit-dirty=true
+          command: pages deploy docs --project-name=jquery-vertical-scroll-docs --branch=main --commit-dirty=true
 
   deploy-demo:
     name: Deploy Demo (Cloudflare Pages)
@@ -82,4 +82,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy demo --project-name=jquery-vertical-scroll --commit-dirty=true
+          command: pages deploy demo --project-name=jquery-vertical-scroll --branch=main --commit-dirty=true

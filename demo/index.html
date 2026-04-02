@@ -1618,7 +1618,7 @@ $(<span class="hl-str">'#page'</span>).<span class="hl-fn">verticalScroll</span>
   </div><!-- /#page -->
 
   <!-- jQuery from CDN -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
 
   <!-- Plugin JS from local source -->
   <script src="../src/js/jquery.verticalScroll.js"></script>
@@ -1750,11 +1750,12 @@ $(<span class="hl-str">'#page'</span>).<span class="hl-fn">verticalScroll</span>
       // Dynamic code preview
       // ============================================================
       function updateCodePreview() {
-        var code = '<span class="hl-fn">$</span>(<span class="hl-str">\'#page\'</span>).<span class="hl-fn">verticalScroll</span>({\n' +
-                   '    <span class="hl-pr">theme</span>: <span class="hl-str">\'' + currentTheme + '\'</span>,\n' +
-                   '    <span class="hl-pr">paginationAnimation</span>: <span class="hl-str">\'' + currentAnim + '\'</span>\n' +
-                   '});';
-        $('#pg-code-preview').html(code);
+        // Use textContent for dynamic values to prevent DOM text reinterpretation
+        var el = document.getElementById('pg-code-preview');
+        el.textContent = "$('#page').verticalScroll({\n" +
+                         "    theme: '" + currentTheme + "',\n" +
+                         "    paginationAnimation: '" + currentAnim + "'\n" +
+                         "});";
       }
     });
   </script>

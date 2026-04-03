@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.5](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.1.4...v2.1.5) (2026-04-03)
+
+
+### Bug Fixes
+
+* **docs:** alias sidebar and navbar to root for all Docsify routes ([#15](https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues/15)) ([6c9d09f](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/6c9d09f41c283e547a751c8dd920c8757da6c92a))
+
 ## [2.1.4](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.1.3...v2.1.4) (2026-04-03)
 
 

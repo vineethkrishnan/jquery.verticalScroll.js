@@ -1,5 +1,6 @@
 * Version
-  * [v2.0.0 (latest)](/changelog.md)
+  * [v3.0 (latest)](/v3/)
+  * [v2.x (stable)](/v2/)
   * [v1.x (legacy)](https://github.com/vineethkrishnan/jquery.verticalScroll.js/tree/v1.x)
 
 * [GitHub](https://github.com/vineethkrishnan/jquery.verticalScroll.js)

@@ -1,12 +1,23 @@
 {
   "name": "@vineethnkrishnan/jquery.verticalscroll",
-  "version": "2.1.5",
+  "version": "3.0.0-alpha.1",
   "description": "A lightweight, customizable jQuery plugin for creating smooth full-page vertical scrolling experiences with pagination, keyboard navigation, touch support, and accessibility features",
   "main": "dist/js/jquery.verticalscroll.min.js",
+  "module": "dist/js/jquery.verticalscroll.esm.js",
+  "types": "dist/types/jquery.verticalscroll.d.ts",
   "style": "dist/css/jquery.verticalscroll.min.css",
   "browser": "dist/js/jquery.verticalscroll.min.js",
   "unpkg": "dist/js/jquery.verticalscroll.min.js",
   "jsdelivr": "dist/js/jquery.verticalscroll.min.js",
+  "exports": {
+    ".": {
+      "import": "./dist/js/jquery.verticalscroll.esm.js",
+      "require": "./dist/js/jquery.verticalscroll.min.js",
+      "default": "./dist/js/jquery.verticalscroll.min.js"
+    },
+    "./css": "./dist/css/jquery.verticalscroll.min.css",
+    "./dist/*": "./dist/*"
+  },
   "files": [
     "dist/",
     "src/",
@@ -15,9 +26,10 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "grunt && postcss src/css/jquery.verticalScroll.css --replace --no-map",
-    "build:scss": "npx sass src/scss/main.scss src/css/jquery.verticalScroll.css --source-map",
-    "build:grunt": "grunt",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "sass src/scss/main.scss src/css/jquery.verticalScroll.css --source-map && postcss src/css/jquery.verticalScroll.css --replace && postcss src/css/jquery.verticalScroll.css -o dist/css/jquery.verticalscroll.min.css --env production --no-map",
+    "build:js": "rollup -c",
+    "pretest": "npm run build:js",
     "test": "jest",
     "test:verbose": "jest --verbose",
     "test:e2e": "npx playwright test --project=chromium --project=firefox --project=webkit",
@@ -61,20 +73,19 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
+    "@rollup/plugin-terser": "^1.0.0",
     "autoprefixer": "^10.4.27",
-    "grunt": "^1.6.1",
-    "grunt-contrib-cssmin": "^5.0.0",
-    "grunt-contrib-uglify": "^5.2.2",
-    "grunt-sass": "^4.1.0",
+    "cssnano": "^7.1.4",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "jquery": "^4.0.0",
     "postcss": "^8.5.8",
     "postcss-cli": "^11.0.1",
+    "rollup": "^4.60.1",
     "sass": "^1.98.0"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public"

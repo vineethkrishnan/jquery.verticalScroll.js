@@ -76,12 +76,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
 
-      - name: Copy plugin assets into demo
+      - name: Copy built assets into demo
         run: |
-          mkdir -p demo/src/css demo/src/js
-          cp src/css/jquery.verticalScroll.css demo/src/css/
-          cp src/js/jquery.verticalScroll.js demo/src/js/
+          mkdir -p demo/dist/css demo/dist/js
+          cp dist/css/jquery.verticalscroll.min.css demo/dist/css/
+          cp dist/js/jquery.verticalscroll.min.js demo/dist/js/
 
       - name: Deploy demo site
         uses: cloudflare/wrangler-action@v3

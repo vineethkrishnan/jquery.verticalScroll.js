@@ -1,6 +1,6 @@
 {
   "name": "@vineethnkrishnan/jquery.verticalscroll",
-  "version": "3.0.0-alpha.1",
+  "version": "2.2.0",
   "description": "A lightweight, customizable jQuery plugin for creating smooth full-page vertical scrolling experiences with pagination, keyboard navigation, touch support, and accessibility features",
   "main": "dist/js/jquery.verticalscroll.min.js",
   "module": "dist/js/jquery.verticalscroll.esm.js",

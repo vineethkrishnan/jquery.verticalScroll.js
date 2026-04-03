@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.1.5...v2.2.0) (2026-04-03)
+
+
+### Features
+
+* v3.0.0-alpha.1 — modular build, ESM, TypeScript, multi-version docs ([#17](https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues/17)) ([d090069](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/d09006986af97db8ac8ec3e29b5ad671e27848f0))
+
 ## [2.1.5](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.1.4...v2.1.5) (2026-04-03)
 
 

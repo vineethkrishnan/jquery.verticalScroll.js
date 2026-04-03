@@ -1,7 +1,7 @@
 /**
  * Jest test setup for jQuery Vertical Scroll Plugin
  *
- * Loads jQuery into the jsdom global scope and then loads the plugin
+ * Loads jQuery into the jsdom global scope and then loads the built plugin
  * so that $.fn.verticalScroll is available in every test file.
  */
 
@@ -19,5 +19,5 @@ Object.defineProperty(window, 'innerHeight', { writable: true, value: 768 });
 Object.defineProperty(document.documentElement, 'clientWidth', { writable: true, configurable: true, value: 1024 });
 Object.defineProperty(document.documentElement, 'clientHeight', { writable: true, configurable: true, value: 768 });
 
-// Load the plugin (CommonJS path through UMD)
-require('../src/js/jquery.verticalScroll.js');
+// Load the built plugin (UMD format auto-registers on global jQuery)
+require('../dist/js/jquery.verticalscroll.js');

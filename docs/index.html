@@ -6,13 +6,33 @@
   <title>jQuery Vertical Scroll - Documentation</title>
   <meta name="description" content="Documentation for jQuery Vertical Scroll plugin - smooth full-page vertical scrolling.">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    /* Version badge in sidebar */
+    .sidebar .version-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+    .sidebar .version-tag.latest {
+      background: #42b983;
+      color: #fff;
+    }
+    .sidebar .version-tag.stable {
+      background: #e2e2e2;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
   <script>
     window.$docsify = {
       name: 'jQuery Vertical Scroll',
-      nameLink: '/',
+      nameLink: '#/v3/',
       repo: 'https://github.com/vineethkrishnan/jquery.verticalScroll.js',
       loadSidebar: 'sidebar.md',
       loadNavbar: 'navbar.md',
@@ -20,21 +40,37 @@
       subMaxLevel: 3,
       auto2top: true,
       alias: {
-        '/.*sidebar.md': '/sidebar.md',
+        // Version-specific sidebars
+        '/v2/.*sidebar.md': '/v2/sidebar.md',
+        '/v3/.*sidebar.md': '/v3/sidebar.md',
+        // Root sidebar defaults to v3
+        '/sidebar.md': '/v3/sidebar.md',
+        // Shared navbar for all versions
         '/.*navbar.md': '/navbar.md'
       },
       search: {
         maxAge: 86400000,
-        paths: 'auto',
+        paths: ['/v3/', '/v2/'],
         placeholder: 'Search docs...',
         noData: 'No results found.',
-        depth: 3
+        depth: 3,
+        pathNamespaces: ['/v3', '/v2']
       },
       copyCode: {
         buttonText: 'Copy',
         successText: 'Copied!'
       }
     };
+  </script>
+  <!-- Redirect bare root to v3 docs -->
+  <script>
+    (function() {
+      var hash = window.location.hash;
+      if (!hash || hash === '#/' || hash === '#') {
+        // Don't redirect if coverpage is showing — let Docsify handle it
+        // Only redirect after user dismisses coverpage or on deep link
+      }
+    })();
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
@@ -45,5 +81,6 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-scss.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-markup.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
 </body>
 </html>

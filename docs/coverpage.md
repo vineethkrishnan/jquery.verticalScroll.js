@@ -1,4 +1,4 @@
-![logo](_media/logo.svg ':size=120')
+![logo](media/logo.svg ':size=120')
 
 # jQuery Vertical Scroll <small>2.0.0</small>
 

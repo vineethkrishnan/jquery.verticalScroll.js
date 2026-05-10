@@ -6,6 +6,8 @@
 
 A lightweight, customizable jQuery plugin for creating smooth full-page vertical scrolling experiences. Perfect for single-page applications, landing pages, and presentation-style websites.
 
+Full docs: [jquery-vertical-scroll-docs.vinelabs.de](https://jquery-vertical-scroll-docs.vinelabs.de). Live demo: [jquery-vertical-scroll.vinelabs.de](https://jquery-vertical-scroll.vinelabs.de).
+
 ## ✨ Features
 
 - 🖱️ **Mouse wheel navigation** - Smooth section-by-section scrolling

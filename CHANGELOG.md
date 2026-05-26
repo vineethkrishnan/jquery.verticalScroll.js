@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.2](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.2.1...v2.2.2) (2026-05-26)
+
+
+### CI/CD
+
+* drop Node 20, bump CI to Node 22/24 ([#33](https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues/33)) ([63237ac](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/63237acb51617700f340f070c428c1111c695f24))
+
 ## [2.2.1](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.2.0...v2.2.1) (2026-05-10)
 
 

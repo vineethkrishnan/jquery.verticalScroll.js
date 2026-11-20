@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.3](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.2.2...v2.2.3) (2026-11-20)
+
+
+### CI/CD
+
+* **deps:** bump github/codeql-action ([#54](https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues/54)) ([1853cf2](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/1853cf2e507ca3e5e32df0bfef24e54282b408f2))
+* **deps:** bump the actions group across 1 directory with 3 updates ([#40](https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues/40)) ([6b22ec7](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/6b22ec750d3d3c215b0d083d23153545466fe2e2))
+* **deps:** bump the actions group with 2 updates ([#47](https://github.com/vineethkrishnan/jquery.verticalScroll.js/issues/47)) ([2751b4c](https://github.com/vineethkrishnan/jquery.verticalScroll.js/commit/2751b4c0cb92953e280ef019b2794f9ddffe93ea))
+
 ## [2.2.2](https://github.com/vineethkrishnan/jquery.verticalScroll.js/compare/v2.2.1...v2.2.2) (2026-05-26)
 
 
